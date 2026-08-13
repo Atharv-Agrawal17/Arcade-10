@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Penalty Master | ARCADE 10</title>
+
+<style>
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#07111f;
+color:white;
+text-align:center;
+}
+
+header{
+padding:25px;
+background:#0b1d30;
+border-bottom:1px solid #294963;
+}
+
+h1{
+margin:0;
+font-size:42px;
+}
+
+.subtitle{
+color:#9db5c8;
+margin-top:8px;
+}
+
+.game{
+max-width:900px;
+margin:auto;
+padding:25px 15px;
+}
+
+.scoreboard{
+display:flex;
+justify-content:center;
+gap:15px;
+margin-bottom:20px;
+}
+
+.box{
+background:#10283e;
+padding:12px 25px;
+border-radius:15px;
+}
+
+.box strong{
+display:block;
+font-size:25px;
+color:#ffd43b;
+}
+
+.stadium{
+height:430px;
+position:relative;
+overflow:hidden;
+border-radius:25px;
+background:
+linear-gradient(
+to bottom,
+#4c9a54 0%,
+#347d42 60%,
+#286837 100%
+);
+border:4px solid white;
+}
+
+.goal{
+position:absolute;
+left:15%;
+right:15%;
+top:45px;
+height:170px;
+border:8px solid white;
+border-bottom:15px solid white;
+background:
+repeating-linear-gradient(
+90deg,
+transparent 0 28px,
+rgba(255,255,255,.25) 29px 31px
+);
+}
+
+.goalkeeper{
+position:absolute;
+width:65px;
+height:65px;
+border-radius:50%;
+background:#ffcc00;
+left:calc(50% - 32px);
+top:115px;
+transition:left .25s ease;
+z-index:5;
+}
+
+.goalkeeper::after{
+content:"🧤";
+font-size:40px;
+position:absolute;
+left:12px;
+top:10px;
+}
+
+.ball{
+position:absolute;
+width:48px;
+height:48px;
+border-radius:50%;
+background:white;
+left:calc(50% - 24px);
+bottom:35px;
+font-size:35px;
+line-height:48px;
+cursor:pointer;
+z-index:10;
+transition:
+left .35s ease,
+bottom .35s ease;
+}
+
+.instructions{
+margin:20px 0;
+font-size:18px;
+color:#c3d2df;
+}
+
+.controls{
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.controls button{
+border:none;
+padding:15px 25px;
+border-radius:30px;
+background:#ffd43b;
+color:#111;
+font-weight:bold;
+font-size:16px;
+cursor:pointer;
+}
+
+.controls button:hover{
+transform:scale(1.05);
+}
+
+.message{
+font-size:25px;
+font-weight:bold;
+min-height:35px;
+margin:15px;
+}
+
+.back{
+display:inline-block;
+margin-top:20px;
+color:#ffd43b;
+text-decoration:none;
+}
+
+@media(max-width:600px){
+
+h1{
+font-size:32px;
+}
+
+.stadium{
+height:370px;
+}
+
+.goal{
+left:8%;
+right:8%;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>⚽ PENALTY MASTER</h1>
+
+<div class="subtitle">
+ARCADE 10 • GAME 01
+</div>
+
+</header>
+
+
+<main class="game">
+
+<div class="scoreboard">
+
+<div class="box">
+<strong id="score">0</strong>
+Score
+</div>
+
+<div class="box">
+<strong id="shots">5</strong>
+Shots
+</div>
+
+<div class="box">
+<strong id="level">1</strong>
+Level
+</div>
+
+</div>
+
+
+<div class="stadium">
+
+<div class="goal"></div>
+
+<div
+class="goalkeeper"
+id="keeper">
+</div>
+
+<div
+class="ball"
+id="ball"
+onclick="shoot()">
+⚽
+</div>
+
+</div>
+
+
+<div
+class="instructions"
+id="instructions">
+
+Choose a direction and take your shot!
+
+</div>
+
+
+<div
+class="message"
+id="message">
+</div>
+
+
+<div class="controls">
+
+<button onclick="shoot('left')">
+⬅️ LEFT
+</button>
+
+<button onclick="shoot('center')">
+⬆️ CENTER
+</button>
+
+<button onclick="shoot('right')">
+➡️ RIGHT
+</button>
+
+</div>
+
+
+<a class="back" href="index.html">
+← Back to ARCADE 10
+</a>
+
+</main>
+
+
+<script>
+
+let score = 0;
+let shots = 5;
+let level = 1;
+
+const keeper =
+document.getElementById("keeper");
+
+const ball =
+document.getElementById("ball");
+
+const message =
+document.getElementById("message");
+
+function shoot(direction){
+
+if(shots <= 0){
+
+message.textContent =
+"🏆 GAME OVER!";
+
+return;
+
+}
+
+if(!direction){
+
+direction =
+["left","center","right"]
+[Math.floor(Math.random()*3)];
+
+}
+
+shots--;
+
+document.getElementById("shots")
+.textContent = shots;
+
+
+/* goalkeeper chooses */
+
+let keeperDirection =
+["left","center","right"]
+[Math.floor(Math.random()*3)];
+
+
+/* goalkeeper movement */
+
+if(keeperDirection==="left"){
+
+keeper.style.left="25%";
+
+}
+
+else if(keeperDirection==="right"){
+
+keeper.style.left="70%";
+
+}
+
+else{
+
+keeper.style.left="calc(50% - 32px)";
+
+}
+
+
+/* ball movement */
+
+if(direction==="left"){
+
+ball.style.left="25%";
+
+}
+
+else if(direction==="right"){
+
+ball.style.left="70%";
+
+}
+
+else{
+
+ball.style.left="calc(50% - 24px)";
+
+}
+
+ball.style.bottom="180px";
+
+
+setTimeout(()=>{
+
+if(direction===keeperDirection){
+
+message.textContent =
+"🧤 SAVED!";
+
+}
+
+else{
+
+score += 100 * level;
+
+document.getElementById("score")
+.textContent = score;
+
+message.textContent =
+"⚽ GOAL! +"+(100*level);
+
+}
+
+
+setTimeout(resetBall,800);
+
+},400);
+
+}
+
+
+function resetBall(){
+
+ball.style.left =
+"calc(50% - 24px)";
+
+ball.style.bottom="35px";
+
+if(shots===0){
+
+setTimeout(()=>{
+
+if(score>=300 && level<3){
+
+level++;
+
+document.getElementById("level")
+.textContent=level;
+
+shots=5;
+
+document.getElementById("shots")
+.textContent=shots;
+
+message.textContent =
+"🔥 LEVEL UP!";
+
+}
+
+else{
+
+message.textContent =
+"🏆 FINAL SCORE: "+score;
+
+}
+
+},500);
+
+}
+
+}
+
+
+/* keyboard controls */
+
+document.addEventListener(
+"keydown",
+function(event){
+
+if(event.key==="ArrowLeft")
+shoot("left");
+
+if(event.key==="ArrowUp")
+shoot("center");
+
+if(event.key==="ArrowRight")
+shoot("right");
+
+});
+
+</script>
+
+</body>
+</html>
