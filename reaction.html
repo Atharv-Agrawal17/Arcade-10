@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>Reaction Champion | ARCADE 10</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#07111f;
+    color:white;
+    text-align:center;
+    touch-action:manipulation;
+}
+
+header{
+    padding:18px;
+    background:#0b1d30;
+    border-bottom:1px solid #294963;
+}
+
+header h1{
+    margin:0;
+    font-size:34px;
+}
+
+.subtitle{
+    color:#9db5c8;
+    margin-top:5px;
+}
+
+.game{
+    max-width:750px;
+    margin:auto;
+    padding:15px;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.stat{
+    background:#10283e;
+    padding:10px 22px;
+    border-radius:15px;
+    min-width:100px;
+}
+
+.stat strong{
+    display:block;
+    color:#ffd43b;
+    font-size:24px;
+}
+
+.stat span{
+    font-size:11px;
+    color:#9db5c8;
+}
+
+.arena{
+    position:relative;
+    width:min(94vw,650px);
+    height:500px;
+    margin:auto;
+    overflow:hidden;
+
+    background:
+    radial-gradient(
+        circle,
+        #183c55,
+        #071522 75%
+    );
+
+    border:4px solid #355b76;
+    border-radius:25px;
+}
+
+.target{
+    position:absolute;
+
+    width:105px;
+    height:105px;
+
+    border-radius:50%;
+
+    background:#e53935;
+
+    border:8px solid white;
+
+    box-shadow:
+    0 0 30px rgba(255,255,255,.35);
+
+    cursor:pointer;
+
+    transform:translate(-50%,-50%);
+}
+
+.target::after{
+    content:"⚡";
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    font-size:42px;
+}
+
+.target:active{
+    transform:
+    translate(-50%,-50%)
+    scale(.85);
+}
+
+.message{
+    min-height:35px;
+    margin:15px;
+    font-size:21px;
+    font-weight:bold;
+}
+
+.start{
+    border:none;
+    padding:14px 32px;
+    border-radius:25px;
+    background:#ffd43b;
+    color:#111;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.back{
+    display:block;
+    margin:18px;
+    color:#ffd43b;
+    text-decoration:none;
+}
+
+@media(max-width:600px){
+
+    .arena{
+        height:440px;
+    }
+
+    .target{
+        width:85px;
+        height:85px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>⚡ REACTION CHAMPION</h1>
+
+<div class="subtitle">
+ARCADE 10 • GAME 07
+</div>
+
+</header>
+
+
+<main class="game">
+
+
+<div class="stats">
+
+<div class="stat">
+
+<strong id="score">
+0
+</strong>
+
+<span>SCORE</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="round">
+0
+</strong>
+
+<span>ROUND</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="best">
+0
+</strong>
+
+<span>BEST MS</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="level">
+NORMAL
+</strong>
+
+<span>LEVEL</span>
+
+</div>
+
+</div>
+
+
+
+<div
+class="arena"
+id="arena">
+
+</div>
+
+
+
+<div
+class="message"
+id="message">
+
+Tap START and get ready...
+
+</div>
+
+
+
+<button
+class="start"
+id="startButton"
+onclick="startGame()">
+
+START GAME
+
+</button>
+
+
+<a
+class="back"
+href="index.html">
+
+← Back to ARCADE 10
+
+</a>
+
+
+</main>
+
+
+
+<script>
+
+
+const arena =
+document.getElementById("arena");
+
+const scoreText =
+document.getElementById("score");
+
+const roundText =
+document.getElementById("round");
+
+const bestText =
+document.getElementById("best");
+
+const levelText =
+document.getElementById("level");
+
+const message =
+document.getElementById("message");
+
+const startButton =
+document.getElementById("startButton");
+
+
+let playing = false;
+
+let round = 0;
+
+let score = 0;
+
+let best = 0;
+
+let level = 1;
+
+let target;
+
+let timeout;
+
+let startTime;
+
+
+/* START */
+
+function startGame(){
+
+    if(playing) return;
+
+    playing = true;
+
+    round = 0;
+
+    score = 0;
+
+    level = 1;
+
+    scoreText.textContent = score;
+
+    roundText.textContent = round;
+
+    levelText.textContent = "NORMAL";
+
+    message.textContent =
+    "Wait for the ⚡!";
+
+    startButton.style.display =
+    "none";
+
+    nextRound();
+
+}
+
+
+/* NEXT ROUND */
+
+function nextRound(){
+
+    if(!playing) return;
+
+    round++;
+
+    roundText.textContent =
+    round;
+
+
+    /*
+    LEVELS
+    */
+
+    if(round >= 11){
+
+        level = 3;
+
+        levelText.textContent =
+        "INSANE";
+
+    }
+
+    else if(round >= 6){
+
+        level = 2;
+
+        levelText.textContent =
+        "FAST";
+
+    }
+
+
+    message.textContent =
+    "WAIT...";
+
+
+    removeTarget();
+
+
+    /*
+    RANDOM WAIT
+    */
+
+    const wait =
+    Math.random() *
+    (
+        level === 1
+        ? 1800
+        : level === 2
+        ? 1200
+        : 800
+    ) + 500;
+
+
+    timeout =
+    setTimeout(showTarget,wait);
+
+}
+
+
+/* SHOW */
+
+function showTarget(){
+
+    if(!playing) return;
+
+
+    target =
+    document.createElement("div");
+
+    target.className =
+    "target";
+
+
+    const x =
+    12 +
+    Math.random() * 76;
+
+    const y =
+    12 +
+    Math.random() * 76;
+
+
+    target.style.left =
+    x + "%";
+
+    target.style.top =
+    y + "%";
+
+
+    target.onclick =
+    hitTarget;
+
+
+    arena.appendChild(target);
+
+
+    startTime =
+    performance.now();
+
+
+    message.textContent =
+    "⚡ TAP!";
+
+}
+
+
+/* HIT */
+
+function hitTarget(event){
+
+    event.stopPropagation();
+
+
+    const reaction =
+    Math.round(
+        performance.now() -
+        startTime
+    );
+
+
+    /*
+    SCORE
+    */
+
+    const points =
+    Math.max(
+        20,
+        500 - reaction
+    );
+
+
+    score += points;
+
+    scoreText.textContent =
+    score;
+
+
+    /*
+    BEST TIME
+    */
+
+    if(
+        best === 0 ||
+        reaction < best
+    ){
+
+        best = reaction;
+
+        bestText.textContent =
+        best;
+
+    }
+
+
+    if(reaction < 250){
+
+        message.textContent =
+        "🔥 LIGHTNING! " +
+        reaction +
+        " ms";
+
+    }
+
+    else if(reaction < 400){
+
+        message.textContent =
+        "⚡ GREAT! " +
+        reaction +
+        " ms";
+
+    }
+
+    else{
+
+        message.textContent =
+        "👍 " +
+        reaction +
+        " ms";
+
+    }
+
+
+    removeTarget();
+
+
+    /*
+    END AFTER 15 ROUNDS
+    */
+
+    if(round >= 15){
+
+        endGame();
+
+        return;
+
+    }
+
+
+    setTimeout(
+        nextRound,
+        600
+    );
+
+}
+
+
+/* REMOVE */
+
+function removeTarget(){
+
+    if(target){
+
+        target.remove();
+
+        target = null;
+
+    }
+
+}
+
+
+/* END */
+
+function endGame(){
+
+    playing = false;
+
+    clearTimeout(timeout);
+
+    removeTarget();
+
+    startButton.style.display =
+    "inline-block";
+
+    startButton.textContent =
+    "PLAY AGAIN";
+
+    message.textContent =
+    "🏆 FINAL SCORE: " +
+    score +
+    " • BEST: " +
+    best +
+    " ms";
+
+    saveScore();
+
+}
+
+
+/* SAVE */
+
+function saveScore(){
+
+    const oldScore =
+    Number(
+        localStorage.getItem("arcade10Score")
+    ) || 0;
+
+
+    if(score > oldScore){
+
+        localStorage.setItem(
+            "arcade10Score",
+            score
+        );
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>
