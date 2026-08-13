@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>ARCADE 10</title>
 
@@ -10,1141 +14,636 @@
 
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
+    -webkit-tap-highlight-color:transparent;
 }
 
 body{
+    margin:0;
     font-family:Arial,Helvetica,sans-serif;
-    background:
-    radial-gradient(circle at top,#193b5c,#07111f 50%,#030812);
+    background:#050d18;
     color:white;
-    min-height:100vh;
-    overflow-x:hidden;
 }
 
-/* NAVBAR */
+header{
+    padding:35px 20px 25px;
+    text-align:center;
 
-.navbar{
-    height:70px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0 35px;
-    background:rgba(3,8,18,.92);
+    background:
+    linear-gradient(
+        180deg,
+        #102c45,
+        #07111f
+    );
+
     border-bottom:1px solid #294963;
-    position:sticky;
-    top:0;
-    z-index:100;
-    backdrop-filter:blur(10px);
 }
 
 .logo{
-    font-size:25px;
-    font-weight:900;
-    letter-spacing:3px;
+    font-size:60px;
+    margin-bottom:5px;
 }
 
-.logo span{
-    color:#ffd43b;
-}
-
-.nav-buttons{
-    display:flex;
-    gap:10px;
-}
-
-.nav-buttons button{
-    background:#12273b;
-    color:white;
-    border:1px solid #31516c;
-    padding:10px 18px;
-    border-radius:20px;
-    cursor:pointer;
-}
-
-.nav-buttons button:hover{
-    background:#ffd43b;
-    color:#111;
-}
-
-
-/* HERO */
-
-.hero{
-    min-height:470px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:60px 20px;
-}
-
-.hero-content{
-    max-width:950px;
-}
-
-.small-title{
-    color:#ffd43b;
-    font-size:18px;
-    font-weight:bold;
+h1{
+    margin:0;
+    font-size:48px;
     letter-spacing:4px;
-    margin-bottom:18px;
 }
 
-.hero h1{
-    font-size:clamp(60px,12vw,130px);
-    line-height:.9;
-    letter-spacing:8px;
+.tagline{
+    margin-top:10px;
+    color:#a9bfd0;
+    font-size:17px;
 }
 
-.hero h1 span{
-    color:#ffd43b;
-}
-
-.hero p{
-    font-size:22px;
-    color:#bdd0df;
-    margin:25px 0;
-}
-
-.play{
-    border:none;
-    background:#ffd43b;
-    color:#101010;
-    padding:18px 55px;
-    border-radius:40px;
-    font-size:22px;
-    font-weight:900;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.play:hover{
-    transform:scale(1.07);
-}
-
-
-/* STATS */
-
-.stats{
-    max-width:1050px;
+.container{
+    max-width:1100px;
     margin:auto;
-    padding:0 20px 40px;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
+    padding:30px 18px;
 }
 
-.stat{
-    background:#0d1d2d;
-    border:1px solid #27465f;
-    border-radius:18px;
-    padding:20px;
+.intro{
     text-align:center;
+    margin-bottom:30px;
 }
 
-.stat-number{
-    font-size:30px;
-    font-weight:900;
-    color:#ffd43b;
+.intro h2{
+    font-size:28px;
+    margin:0 0 8px;
 }
 
-.stat-label{
-    color:#8fa6b8;
-    margin-top:5px;
-}
-
-
-/* SECTIONS */
-
-.section{
-    max-width:1150px;
-    margin:auto;
-    padding:50px 20px;
-}
-
-.section-title{
-    margin-bottom:25px;
-}
-
-.section-title h2{
-    font-size:36px;
-}
-
-.section-title p{
-    color:#849bae;
-    margin-top:6px;
+.intro p{
+    color:#91a8ba;
+    margin:0;
 }
 
 
-/* GAME GRID */
+/* GAMES */
 
-.game-grid{
+.games{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:20px;
+
+    grid-template-columns:
+    repeat(
+        auto-fit,
+        minmax(240px,1fr)
+    );
+
+    gap:18px;
 }
 
-.game-card{
+
+/* GAME CARD */
+
+.game{
     position:relative;
-    overflow:hidden;
-    background:linear-gradient(145deg,#12283d,#091827);
+
+    background:
+    linear-gradient(
+        145deg,
+        #112a40,
+        #091624
+    );
+
     border:1px solid #284962;
-    border-radius:25px;
-    padding:28px;
-    min-height:240px;
-    transition:.25s;
+
+    border-radius:22px;
+
+    padding:25px;
+
+    min-height:220px;
+
+    display:flex;
+    flex-direction:column;
+
+    transition:
+    transform .2s,
+    border-color .2s;
+
+    overflow:hidden;
 }
 
-.game-card:hover{
-    transform:translateY(-7px);
+.game:hover{
+    transform:translateY(-5px);
     border-color:#ffd43b;
-    box-shadow:0 15px 35px rgba(0,0,0,.3);
 }
 
-.game-number{
+.number{
     position:absolute;
-    right:20px;
+
+    right:18px;
     top:15px;
-    font-size:55px;
-    font-weight:900;
-    color:rgba(255,255,255,.05);
+
+    font-size:13px;
+
+    color:#66849a;
 }
 
-.game-icon{
-    font-size:52px;
+.icon{
+    font-size:48px;
     margin-bottom:15px;
 }
 
-.game-card h3{
-    font-size:25px;
-    margin-bottom:8px;
+.game h3{
+    margin:0 0 8px;
+
+    font-size:23px;
 }
 
-.game-card p{
-    color:#9fb2c2;
-    line-height:1.5;
+.game p{
+    margin:0 0 20px;
+
+    color:#9db5c8;
+
+    line-height:1.4;
+
+    flex-grow:1;
 }
 
-.levels{
-    display:flex;
-    gap:7px;
-    margin:17px 0;
-    flex-wrap:wrap;
-}
+.play{
+    display:block;
 
-.level{
-    font-size:11px;
-    padding:6px 9px;
-    border-radius:10px;
-    background:#17344c;
-    color:#8faabd;
-}
+    text-decoration:none;
 
-.level.active{
+    text-align:center;
+
     background:#ffd43b;
+
     color:#111;
+
+    padding:12px;
+
+    border-radius:18px;
+
     font-weight:bold;
 }
 
-.game-button{
-    border:none;
-    padding:11px 22px;
-    border-radius:20px;
-    background:#ffd43b;
-    color:#111;
-    font-weight:bold;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.game-button:hover{
-    transform:scale(1.05);
+.play:hover{
+    background:#ffe477;
 }
 
 
 /* CHAMPIONSHIP */
 
-.championship{
-    margin-top:30px;
-    padding:45px;
-    border-radius:28px;
-    background:linear-gradient(120deg,#182f46,#0a1828);
-    border:1px solid #3d5d76;
+.champion{
+    margin-top:25px;
+
+    padding:30px;
+
+    border-radius:25px;
+
     text-align:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #182e45,
+        #0b1828
+    );
+
+    border:2px solid #ffd43b;
 }
 
-.trophy{
-    font-size:70px;
+.champion h2{
+    margin:0 0 8px;
+
+    font-size:30px;
 }
 
-.championship h2{
-    font-size:40px;
-    margin:15px 0;
+.champion p{
+    color:#a9bfd0;
 }
 
-.championship p{
-    color:#a9bdcd;
-    max-width:650px;
-    margin:0 auto 25px;
-    line-height:1.6;
-}
+.championButton{
+    display:inline-block;
 
+    margin-top:10px;
 
-/* HOW TO PLAY */
+    padding:14px 30px;
 
-.instructions{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
+    border-radius:25px;
 
-.instruction{
-    background:#0c1c2c;
-    border:1px solid #223f57;
-    padding:25px;
-    border-radius:20px;
-}
+    background:#ffd43b;
 
-.instruction strong{
-    display:block;
-    color:#ffd43b;
-    font-size:20px;
-    margin-bottom:10px;
-}
+    color:#111;
 
-.instruction p{
-    color:#91a8b9;
-    line-height:1.5;
+    text-decoration:none;
+
+    font-weight:bold;
 }
 
 
 /* FOOTER */
 
 footer{
-    margin-top:60px;
-    padding:45px 20px;
     text-align:center;
-    background:#030812;
-    border-top:1px solid #1c3448;
-}
 
-footer h2{
-    letter-spacing:3px;
-}
+    padding:30px;
 
-footer p{
-    color:#70879a;
-    margin-top:10px;
-}
+    color:#66849a;
 
-
-/* MOBILE / IPAD */
-
-@media(max-width:750px){
-
-    .navbar{
-        padding:0 15px;
-    }
-
-    .nav-buttons button{
-        padding:8px 11px;
-        font-size:12px;
-    }
-
-    .game-grid{
-        grid-template-columns:1fr;
-    }
-
-    .stats{
-        grid-template-columns:1fr;
-    }
-
-    .instructions{
-        grid-template-columns:1fr;
-    }
-
-    .hero{
-        min-height:430px;
-    }
-
-    .hero p{
-        font-size:18px;
-    }
-
-    .championship{
-        padding:30px 20px;
-    }
+    font-size:13px;
 }
 
 </style>
+
 </head>
 
 
 <body>
 
 
-<!-- NAVIGATION -->
+<header>
 
-<nav class="navbar">
+<div class="logo">
+🕹️
+</div>
 
-    <div class="logo">
-        ARCADE <span>10</span>
-    </div>
+<h1>ARCADE 10</h1>
 
-    <div class="nav-buttons">
+<div class="tagline">
+10 GAMES • 10 CHALLENGES • ONE ARCADE
+</div>
 
-        <button onclick="scrollToGames()">
-            Games
-        </button>
-
-        <button onclick="showAbout()">
-            About
-        </button>
-
-    </div>
-
-</nav>
+</header>
 
 
 
-<!-- HERO -->
+<main class="container">
 
-<section class="hero">
 
-    <div class="hero-content">
+<div class="intro">
 
-        <div class="small-title">
-            WELCOME TO THE ULTIMATE SPORTS ARCADE
-        </div>
+<h2>Choose Your Game</h2>
 
-        <h1>
-            ARCADE <span>10</span>
-        </h1>
+<p>
+Pick a challenge and see how high you can score.
+</p>
 
-        <p>
-            10 games. Multiple levels. One champion.
-        </p>
+</div>
 
-        <button class="play" onclick="scrollToGames()">
-            PLAY NOW
-        </button>
 
-    </div>
+
+<section class="games">
+
+
+<!-- GAME 1 -->
+
+<div class="game">
+
+<div class="number">
+01
+</div>
+
+<div class="icon">
+⚽
+</div>
+
+<h3>
+Football Challenge
+</h3>
+
+<p>
+Test your football skills and become the star.
+</p>
+
+<a
+class="play"
+href="game1.html">
+
+PLAY
+
+</a>
+
+</div>
+
+
+
+<!-- GAME 2 -->
+
+<div class="game">
+
+<div class="number">
+02
+</div>
+
+<div class="icon">
+🏎️
+</div>
+
+<h3>
+Speed Racer
+</h3>
+
+<p>
+Race against the clock and chase the fastest score.
+</p>
+
+<a
+class="play"
+href="game2.html">
+
+PLAY
+
+</a>
+
+</div>
+
+
+
+<!-- GAME 3 -->
+
+<div class="game">
+
+<div class="number">
+03
+</div>
+
+<div class="icon">
+🏀
+</div>
+
+<h3>
+Hoop Challenge
+</h3>
+
+<p>
+How many shots can you score?
+</p>
+
+<a
+class="play"
+href="game3.html">
+
+PLAY
+
+</a>
+
+</div>
+
+
+
+<!-- GAME 4 -->
+
+<div class="game">
+
+<div class="number">
+04
+</div>
+
+<div class="icon">
+🎯
+</div>
+
+<h3>
+Target Striker
+</h3>
+
+<p>
+Hit the targets and build your score.
+</p>
+
+<a
+class="play"
+href="game4.html">
+
+PLAY
+
+</a>
+
+</div>
+
+
+
+<!-- GAME 5 -->
+
+<div class="game">
+
+<div class="number">
+05
+</div>
+
+<div class="icon">
+🥅
+</div>
+
+<h3>
+Goalkeeper Hero
+</h3>
+
+<p>
+Can you stop the shots?
+</p>
+
+<a
+class="play"
+href="game5.html">
+
+PLAY
+
+</a>
+
+</div>
+
+
+
+<!-- GAME 6 -->
+
+<div class="game">
+
+<div class="number">
+06
+</div>
+
+<div class="icon">
+🧠
+</div>
+
+<h3>
+Sports Quiz
+</h3>
+
+<p>
+Easy, Medium and Hard questions.
+</p>
+
+<a
+class="play"
+href="quiz.html">
+
+PLAY
+
+</a>
+
+</div>
+
+
+
+<!-- GAME 7 -->
+
+<div class="game">
+
+<div class="number">
+07
+</div>
+
+<div class="icon">
+⚡
+</div>
+
+<h3>
+Reaction Champion
+</h3>
+
+<p>
+How fast can you react?
+</p>
+
+<a
+class="play"
+href="reaction.html">
+
+PLAY
+
+</a>
+
+</div>
+
+
+
+<!-- GAME 8 -->
+
+<div class="game">
+
+<div class="number">
+08
+</div>
+
+<div class="icon">
+🏃
+</div>
+
+<h3>
+Sprint Dash
+</h3>
+
+<p>
+Tap as fast as possible and reach the finish.
+</p>
+
+<a
+class="play"
+href="sprint.html">
+
+PLAY
+
+</a>
+
+</div>
+
+
+
+<!-- GAME 9 -->
+
+<div class="game">
+
+<div class="number">
+09
+</div>
+
+<div class="icon">
+🧩
+</div>
+
+<h3>
+Sports Memory
+</h3>
+
+<p>
+Match the sports cards.
+</p>
+
+<a
+class="play"
+href="memory.html">
+
+PLAY
+
+</a>
+
+</div>
+
+
+
+<!-- GAME 10 -->
+
+<div class="game">
+
+<div class="number">
+10
+</div>
+
+<div class="icon">
+🏆
+</div>
+
+<h3>
+Arcade Championship
+</h3>
+
+<p>
+The ultimate ARCADE 10 challenge.
+</p>
+
+<a
+class="play"
+href="championship.html">
+
+PLAY
+
+</a>
+
+</div>
+
 
 </section>
 
 
 
-<!-- PLAYER STATS -->
+<!-- CHAMPIONSHIP -->
 
-<section class="stats">
+<section class="champion">
 
-    <div class="stat">
+<h2>
+🏆 READY FOR THE FINAL CHALLENGE?
+</h2>
 
-        <div class="stat-number" id="score">
-            0
-        </div>
+<p>
+Combine speed, accuracy and memory
+in the Arcade Championship.
+</p>
 
-        <div class="stat-label">
-            TOTAL SCORE
-        </div>
+<a
+class="championButton"
+href="championship.html">
 
-    </div>
+ENTER CHAMPIONSHIP
 
-
-    <div class="stat">
-
-        <div class="stat-number">
-            10
-        </div>
-
-        <div class="stat-label">
-            GAMES
-        </div>
-
-    </div>
-
-
-    <div class="stat">
-
-        <div class="stat-number" id="level">
-            1
-        </div>
-
-        <div class="stat-label">
-            CURRENT LEVEL
-        </div>
-
-    </div>
+</a>
 
 </section>
 
 
+</main>
 
-<!-- GAMES -->
 
-<section class="section" id="games">
-
-    <div class="section-title">
-
-        <h2>
-            🏆 THE 10 GAMES
-        </h2>
-
-        <p>
-            Choose your challenge.
-        </p>
-
-    </div>
-
-
-    <div class="game-grid">
-
-
-        <!-- GAME 1 -->
-
-        <div class="game-card">
-
-            <div class="game-number">
-                01
-            </div>
-
-            <div class="game-icon">
-                ⚽
-            </div>
-
-            <h3>
-                Penalty Master
-            </h3>
-
-            <p>
-                Step up to the penalty spot and beat the goalkeeper.
-            </p>
-
-            <div class="levels">
-
-                <span class="level active">
-                    EASY
-                </span>
-
-                <span class="level">
-                    PRO
-                </span>
-
-                <span class="level">
-                    LEGEND
-                </span>
-
-            </div>
-
-            <button
-                class="game-button"
-                onclick="location.href='penalty.html'">
-
-                PLAY ⚽
-
-            </button>
-
-        </div>
-
-
-
-        <!-- GAME 2 -->
-
-        <div class="game-card">
-
-            <div class="game-number">
-                02
-            </div>
-
-            <div class="game-icon">
-                🏎️
-            </div>
-
-            <h3>
-                Racing Rush
-            </h3>
-
-            <p>
-                Race through the track and avoid every obstacle.
-            </p>
-
-            <div class="levels">
-
-                <span class="level active">
-                    EASY
-                </span>
-
-                <span class="level">
-                    PRO
-                </span>
-
-                <span class="level">
-                    LEGEND
-                </span>
-
-            </div>
-
-            <button
-                class="game-button"
-                onclick="location.href='racing.html'">
-
-                PLAY 🏎️
-
-            </button>
-
-        </div>
-
-
-
-        <!-- GAME 3 -->
-
-        <div class="game-card">
-
-            <div class="game-number">
-                03
-            </div>
-
-            <div class="game-icon">
-                🏀
-            </div>
-
-            <h3>
-                Hoop Challenge
-            </h3>
-
-            <p>
-                Take your shots and score as many baskets as possible.
-            </p>
-
-            <div class="levels">
-
-                <span class="level active">
-                    ROOKIE
-                </span>
-
-                <span class="level">
-                    PRO
-                </span>
-
-                <span class="level">
-                    ALL-STAR
-                </span>
-
-            </div>
-
-            <button
-                class="game-button"
-                onclick="comingSoon('Hoop Challenge')">
-
-                COMING SOON
-
-            </button>
-
-        </div>
-
-
-
-        <!-- GAME 4 -->
-
-        <div class="game-card">
-
-            <div class="game-number">
-                04
-            </div>
-
-            <div class="game-icon">
-                🎯
-            </div>
-
-            <h3>
-                Target Striker
-            </h3>
-
-            <p>
-                Hit moving targets and become the most accurate striker.
-            </p>
-
-            <div class="levels">
-
-                <span class="level active">
-                    LEVEL 1
-                </span>
-
-                <span class="level">
-                    LEVEL 2
-                </span>
-
-                <span class="level">
-                    LEVEL 3
-                </span>
-
-            </div>
-
-            <button
-                class="game-button"
-                onclick="comingSoon('Target Striker')">
-
-                COMING SOON
-
-            </button>
-
-        </div>
-
-
-
-        <!-- GAME 5 -->
-
-        <div class="game-card">
-
-            <div class="game-number">
-                05
-            </div>
-
-            <div class="game-icon">
-                🥅
-            </div>
-
-            <h3>
-                Goalkeeper Hero
-            </h3>
-
-            <p>
-                Protect the goal and save incoming shots.
-            </p>
-
-            <div class="levels">
-
-                <span class="level active">
-                    ROOKIE
-                </span>
-
-                <span class="level">
-                    PRO
-                </span>
-
-                <span class="level">
-                    WORLD CLASS
-                </span>
-
-            </div>
-
-            <button
-                class="game-button"
-                onclick="comingSoon('Goalkeeper Hero')">
-
-                COMING SOON
-
-            </button>
-
-        </div>
-
-
-
-        <!-- GAME 6 -->
-
-        <div class="game-card">
-
-            <div class="game-number">
-                06
-            </div>
-
-            <div class="game-icon">
-                🧠
-            </div>
-
-            <h3>
-                Sports Quiz
-            </h3>
-
-            <p>
-                Test your knowledge of sports from around the world.
-            </p>
-
-            <div class="levels">
-
-                <span class="level active">
-                    EASY
-                </span>
-
-                <span class="level">
-                    MEDIUM
-                </span>
-
-                <span class="level">
-                    HARD
-                </span>
-
-            </div>
-
-            <button
-                class="game-button"
-                onclick="comingSoon('Sports Quiz')">
-
-                COMING SOON
-
-            </button>
-
-        </div>
-
-
-
-        <!-- GAME 7 -->
-
-        <div class="game-card">
-
-            <div class="game-number">
-                07
-            </div>
-
-            <div class="game-icon">
-                ⚡
-            </div>
-
-            <h3>
-                Reaction Champion
-            </h3>
-
-            <p>
-                React as quickly as possible when the target appears.
-            </p>
-
-            <div class="levels">
-
-                <span class="level active">
-                    NORMAL
-                </span>
-
-                <span class="level">
-                    FAST
-                </span>
-
-                <span class="level">
-                    INSANE
-                </span>
-
-            </div>
-
-            <button
-                class="game-button"
-                onclick="comingSoon('Reaction Champion')">
-
-                COMING SOON
-
-            </button>
-
-        </div>
-
-
-
-        <!-- GAME 8 -->
-
-        <div class="game-card">
-
-            <div class="game-number">
-                08
-            </div>
-
-            <div class="game-icon">
-                🏃
-            </div>
-
-            <h3>
-                Sprint Dash
-            </h3>
-
-            <p>
-                Race your athlete to the finish line.
-            </p>
-
-            <div class="levels">
-
-                <span class="level active">
-                    100M
-                </span>
-
-                <span class="level">
-                    200M
-                </span>
-
-                <span class="level">
-                    400M
-                </span>
-
-            </div>
-
-            <button
-                class="game-button"
-                onclick="comingSoon('Sprint Dash')">
-
-                COMING SOON
-
-            </button>
-
-        </div>
-
-
-
-        <!-- GAME 9 -->
-
-        <div class="game-card">
-
-            <div class="game-number">
-                09
-            </div>
-
-            <div class="game-icon">
-                🌍
-            </div>
-
-            <h3>
-                Sports Trivia Blitz
-            </h3>
-
-            <p>
-                Answer sports questions before the timer runs out.
-            </p>
-
-            <div class="levels">
-
-                <span class="level active">
-                    30 SEC
-                </span>
-
-                <span class="level">
-                    20 SEC
-                </span>
-
-                <span class="level">
-                    10 SEC
-                </span>
-
-            </div>
-
-            <button
-                class="game-button"
-                onclick="comingSoon('Sports Trivia Blitz')">
-
-                COMING SOON
-
-            </button>
-
-        </div>
-
-
-
-        <!-- GAME 10 -->
-
-        <div class="game-card">
-
-            <div class="game-number">
-                10
-            </div>
-
-            <div class="game-icon">
-                🏆
-            </div>
-
-            <h3>
-                ARCADE 10 Championship
-            </h3>
-
-            <p>
-                The ultimate tournament. Master the arcade and become champion.
-            </p>
-
-            <div class="levels">
-
-                <span class="level active">
-                    ROUND 1
-                </span>
-
-                <span class="level">
-                    ROUND 2
-                </span>
-
-                <span class="level">
-                    FINAL
-                </span>
-
-            </div>
-
-            <button
-                class="game-button"
-                onclick="comingSoon('ARCADE 10 Championship')">
-
-                COMING SOON
-
-            </button>
-
-        </div>
-
-
-    </div>
-
-
-
-    <!-- CHAMPIONSHIP -->
-
-    <div class="championship">
-
-        <div class="trophy">
-            🏆
-        </div>
-
-        <h2>
-            ARCADE 10 CHAMPIONSHIP
-        </h2>
-
-        <p>
-            Master all 10 games, collect points and prove that
-            you are the ultimate ARCADE 10 champion.
-        </p>
-
-        <button
-            class="play"
-            onclick="comingSoon('Championship')">
-
-            ENTER CHAMPIONSHIP
-
-        </button>
-
-    </div>
-
-</section>
-
-
-
-<!-- HOW TO PLAY -->
-
-<section class="section">
-
-    <div class="section-title">
-
-        <h2>
-            🎮 HOW TO PLAY
-        </h2>
-
-        <p>
-            Three simple steps.
-        </p>
-
-    </div>
-
-
-    <div class="instructions">
-
-
-        <div class="instruction">
-
-            <strong>
-                01 — CHOOSE
-            </strong>
-
-            <p>
-                Pick one of the 10 sports games.
-            </p>
-
-        </div>
-
-
-        <div class="instruction">
-
-            <strong>
-                02 — PLAY
-            </strong>
-
-            <p>
-                Beat the challenge and earn points.
-            </p>
-
-        </div>
-
-
-        <div class="instruction">
-
-            <strong>
-                03 — BECOME CHAMPION
-            </strong>
-
-            <p>
-                Master every game and conquer the championship.
-            </p>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- FOOTER -->
 
 <footer>
 
-    <h2>
-        ARCADE 10
-    </h2>
-
-    <p>
-        10 Games • Multiple Levels • One Champion
-    </p>
-
-    <p>
-        Built for the ultimate sports gaming challenge.
-    </p>
+ARCADE 10 • 10 GAMES • HAVE FUN 🕹️
 
 </footer>
 
 
-
-<script>
-
-let totalScore =
-Number(localStorage.getItem("arcade10Score")) || 0;
-
-document.getElementById("score").textContent =
-totalScore;
-
-
-function scrollToGames(){
-
-    document
-    .getElementById("games")
-    .scrollIntoView({
-        behavior:"smooth"
-    });
-
-}
-
-
-function comingSoon(game){
-
-    alert(
-        game +
-        "\n\n🚀 Coming soon!"
-    );
-
-}
-
-
-function showAbout(){
-
-    alert(
-        "ARCADE 10 🏆\n\n" +
-        "10 sports games and quizzes.\n\n" +
-        "Multiple levels.\n\n" +
-        "One ultimate champion!"
-    );
-
-}
-
-</script>
-
-
 </body>
+
 </html>
