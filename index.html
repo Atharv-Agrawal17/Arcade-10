@@ -17,7 +17,7 @@
 body{
     font-family:Arial,Helvetica,sans-serif;
     background:
-        radial-gradient(circle at top,#193b5c,#07111f 50%,#030812);
+    radial-gradient(circle at top,#193b5c,#07111f 50%,#030812);
     color:white;
     min-height:100vh;
     overflow-x:hidden;
@@ -31,7 +31,7 @@ body{
     justify-content:space-between;
     align-items:center;
     padding:0 35px;
-    background:rgba(3,8,18,.9);
+    background:rgba(3,8,18,.92);
     border-bottom:1px solid #294963;
     position:sticky;
     top:0;
@@ -81,7 +81,7 @@ body{
 }
 
 .hero-content{
-    max-width:900px;
+    max-width:950px;
 }
 
 .small-title{
@@ -89,7 +89,7 @@ body{
     font-size:18px;
     font-weight:bold;
     letter-spacing:4px;
-    margin-bottom:15px;
+    margin-bottom:18px;
 }
 
 .hero h1{
@@ -156,7 +156,7 @@ body{
 }
 
 
-/* GAMES */
+/* SECTIONS */
 
 .section{
     max-width:1150px;
@@ -174,8 +174,11 @@ body{
 
 .section-title p{
     color:#849bae;
-    margin-top:5px;
+    margin-top:6px;
 }
+
+
+/* GAME GRID */
 
 .game-grid{
     display:grid;
@@ -190,13 +193,14 @@ body{
     border:1px solid #284962;
     border-radius:25px;
     padding:28px;
-    min-height:230px;
+    min-height:240px;
     transition:.25s;
 }
 
 .game-card:hover{
     transform:translateY(-7px);
     border-color:#ffd43b;
+    box-shadow:0 15px 35px rgba(0,0,0,.3);
 }
 
 .game-number{
@@ -246,12 +250,13 @@ body{
 
 .game-button{
     border:none;
-    padding:11px 20px;
+    padding:11px 22px;
     border-radius:20px;
     background:#ffd43b;
     color:#111;
     font-weight:bold;
     cursor:pointer;
+    transition:.2s;
 }
 
 .game-button:hover{
@@ -335,7 +340,7 @@ footer p{
 }
 
 
-/* MOBILE */
+/* MOBILE / IPAD */
 
 @media(max-width:750px){
 
@@ -344,7 +349,7 @@ footer p{
     }
 
     .nav-buttons button{
-        padding:8px 10px;
+        padding:8px 11px;
         font-size:12px;
     }
 
@@ -403,6 +408,7 @@ footer p{
 </nav>
 
 
+
 <!-- HERO -->
 
 <section class="hero">
@@ -428,6 +434,7 @@ footer p{
     </div>
 
 </section>
+
 
 
 <!-- PLAYER STATS -->
@@ -476,7 +483,7 @@ footer p{
 
 
 
-<!-- GAME SECTION -->
+<!-- GAMES -->
 
 <section class="section" id="games">
 
@@ -496,7 +503,7 @@ footer p{
     <div class="game-grid">
 
 
-        <!-- 01 -->
+        <!-- GAME 1 -->
 
         <div class="game-card">
 
@@ -536,7 +543,7 @@ footer p{
                 class="game-button"
                 onclick="location.href='penalty.html'">
 
-                PLAY
+                PLAY ⚽
 
             </button>
 
@@ -544,7 +551,7 @@ footer p{
 
 
 
-        <!-- 02 -->
+        <!-- GAME 2 -->
 
         <div class="game-card">
 
@@ -582,9 +589,9 @@ footer p{
 
             <button
                 class="game-button"
-                onclick="comingSoon('Racing Rush')">
+                onclick="location.href='racing.html'">
 
-                PLAY
+                PLAY 🏎️
 
             </button>
 
@@ -592,7 +599,7 @@ footer p{
 
 
 
-        <!-- 03 -->
+        <!-- GAME 3 -->
 
         <div class="game-card">
 
@@ -632,7 +639,7 @@ footer p{
                 class="game-button"
                 onclick="comingSoon('Hoop Challenge')">
 
-                PLAY
+                COMING SOON
 
             </button>
 
@@ -640,7 +647,7 @@ footer p{
 
 
 
-        <!-- 04 -->
+        <!-- GAME 4 -->
 
         <div class="game-card">
 
@@ -680,7 +687,7 @@ footer p{
                 class="game-button"
                 onclick="comingSoon('Target Striker')">
 
-                PLAY
+                COMING SOON
 
             </button>
 
@@ -688,7 +695,7 @@ footer p{
 
 
 
-        <!-- 05 -->
+        <!-- GAME 5 -->
 
         <div class="game-card">
 
@@ -728,7 +735,7 @@ footer p{
                 class="game-button"
                 onclick="comingSoon('Goalkeeper Hero')">
 
-                PLAY
+                COMING SOON
 
             </button>
 
@@ -736,7 +743,7 @@ footer p{
 
 
 
-        <!-- 06 -->
+        <!-- GAME 6 -->
 
         <div class="game-card">
 
@@ -776,7 +783,7 @@ footer p{
                 class="game-button"
                 onclick="comingSoon('Sports Quiz')">
 
-                PLAY
+                COMING SOON
 
             </button>
 
@@ -784,7 +791,7 @@ footer p{
 
 
 
-        <!-- 07 -->
+        <!-- GAME 7 -->
 
         <div class="game-card">
 
@@ -824,7 +831,7 @@ footer p{
                 class="game-button"
                 onclick="comingSoon('Reaction Champion')">
 
-                PLAY
+                COMING SOON
 
             </button>
 
@@ -832,7 +839,7 @@ footer p{
 
 
 
-        <!-- 08 -->
+        <!-- GAME 8 -->
 
         <div class="game-card">
 
@@ -872,7 +879,7 @@ footer p{
                 class="game-button"
                 onclick="comingSoon('Sprint Dash')">
 
-                PLAY
+                COMING SOON
 
             </button>
 
@@ -880,7 +887,7 @@ footer p{
 
 
 
-        <!-- 09 -->
+        <!-- GAME 9 -->
 
         <div class="game-card">
 
@@ -897,7 +904,7 @@ footer p{
             </h3>
 
             <p>
-                Answer as many sports questions as possible before time runs out.
+                Answer sports questions before the timer runs out.
             </p>
 
             <div class="levels">
@@ -920,7 +927,7 @@ footer p{
                 class="game-button"
                 onclick="comingSoon('Sports Trivia Blitz')">
 
-                PLAY
+                COMING SOON
 
             </button>
 
@@ -928,7 +935,7 @@ footer p{
 
 
 
-        <!-- 10 -->
+        <!-- GAME 10 -->
 
         <div class="game-card">
 
@@ -941,11 +948,11 @@ footer p{
             </div>
 
             <h3>
-                Championship
+                ARCADE 10 Championship
             </h3>
 
             <p>
-                The ultimate ARCADE 10 tournament.
+                The ultimate tournament. Master the arcade and become champion.
             </p>
 
             <div class="levels">
@@ -968,7 +975,7 @@ footer p{
                 class="game-button"
                 onclick="comingSoon('ARCADE 10 Championship')">
 
-                PLAY
+                COMING SOON
 
             </button>
 
@@ -992,8 +999,8 @@ footer p{
         </h2>
 
         <p>
-            Master the games, collect points and prove that you are
-            the ultimate ARCADE 10 champion.
+            Master all 10 games, collect points and prove that
+            you are the ultimate ARCADE 10 champion.
         </p>
 
         <button
@@ -1119,7 +1126,7 @@ function comingSoon(game){
 
     alert(
         game +
-        "\n\n🚀 This game is coming next!"
+        "\n\n🚀 Coming soon!"
     );
 
 }
@@ -1129,8 +1136,8 @@ function showAbout(){
 
     alert(
         "ARCADE 10 🏆\n\n" +
-        "10 sports games.\n" +
-        "Multiple levels.\n" +
+        "10 sports games and quizzes.\n\n" +
+        "Multiple levels.\n\n" +
         "One ultimate champion!"
     );
 
