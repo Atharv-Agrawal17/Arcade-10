@@ -7,6 +7,590 @@
 <title>Racing Rush | ARCADE 10</title>
 
 <style>
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
-*{
-    box-sizing
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #07111f;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+    touch-action: none;
+}
+
+header {
+    padding: 18px;
+    background: #0b1d30;
+    border-bottom: 1px solid #294963;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 34px;
+}
+
+.subtitle {
+    color: #9db5c8;
+    margin-top: 5px;
+}
+
+.game {
+    max-width: 600px;
+    margin: auto;
+    padding: 15px;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.stat {
+    background: #10283e;
+    padding: 9px 20px;
+    border-radius: 14px;
+    min-width: 90px;
+}
+
+.stat strong {
+    display: block;
+    color: #ffd43b;
+    font-size: 22px;
+}
+
+.stat span {
+    font-size: 11px;
+    color: #9db5c8;
+}
+
+.track {
+    position: relative;
+    width: min(92vw, 420px);
+    height: 65vh;
+    max-height: 650px;
+    min-height: 430px;
+    margin: auto;
+    overflow: hidden;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            #333 0px,
+            #333 45px,
+            #292929 45px,
+            #292929 90px
+        );
+    border-left: 12px solid #eeeeee;
+    border-right: 12px solid #eeeeee;
+    border-radius: 12px;
+}
+
+.lane-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    border-left: 5px dashed rgba(255,255,255,.7);
+}
+
+.line1 {
+    left: 33.33%;
+}
+
+.line2 {
+    left: 66.66%;
+}
+
+.car {
+    position: absolute;
+    width: 54px;
+    height: 88px;
+    bottom: 25px;
+    left: calc(50% - 27px);
+    background: #e53935;
+    border-radius: 13px 13px 8px 8px;
+    border: 3px solid white;
+    z-index: 5;
+    transition: left .12s;
+}
+
+.car::before {
+    content: "";
+    position: absolute;
+    width: 34px;
+    height: 30px;
+    left: 7px;
+    top: 9px;
+    background: #9ed8ff;
+    border-radius: 7px;
+}
+
+.car::after {
+    content: "🏎️";
+    position: absolute;
+    font-size: 37px;
+    left: 5px;
+    top: 32px;
+}
+
+.obstacle {
+    position: absolute;
+    width: 54px;
+    height: 75px;
+    border-radius: 10px;
+    background: #1565c0;
+    border: 3px solid white;
+    z-index: 4;
+}
+
+.obstacle::after {
+    content: "🚧";
+    font-size: 32px;
+    position: absolute;
+    left: 8px;
+    top: 18px;
+}
+
+.coin {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #ffd43b;
+    color: #111;
+    font-size: 22px;
+    line-height: 35px;
+    z-index: 3;
+}
+
+.message {
+    min-height: 28px;
+    margin: 8px;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 8px;
+}
+
+.controls button {
+    width: 90px;
+    height: 55px;
+    border: none;
+    border-radius: 20px;
+    background: #ffd43b;
+    color: #111;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.controls button:active {
+    transform: scale(.92);
+}
+
+.start {
+    margin-top: 10px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    background: #ffd43b;
+    color: #111;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.back {
+    display: block;
+    margin: 12px;
+    color: #ffd43b;
+    text-decoration: none;
+}
+
+@media (max-height: 700px) {
+    .track {
+        height: 55vh;
+        min-height: 330px;
+    }
+
+    .game {
+        padding-top: 8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏎️ RACING RUSH</h1>
+    <div class="subtitle">ARCADE 10 • GAME 02</div>
+</header>
+
+<main class="game">
+
+    <div class="scoreboard">
+
+        <div class="stat">
+            <strong id="score">0</strong>
+            <span>SCORE</span>
+        </div>
+
+        <div class="stat">
+            <strong id="speed">1</strong>
+            <span>LEVEL</span>
+        </div>
+
+        <div class="stat">
+            <strong id="lives">3</strong>
+            <span>LIVES</span>
+        </div>
+
+    </div>
+
+    <div class="track" id="track">
+
+        <div class="lane-line line1"></div>
+        <div class="lane-line line2"></div>
+
+        <div class="car" id="car"></div>
+
+    </div>
+
+    <div class="message" id="message">
+        Tap START to race!
+    </div>
+
+    <button class="start" id="startButton" onclick="startGame()">
+        START RACE
+    </button>
+
+    <div class="controls">
+
+        <button onclick="moveLeft()">⬅️</button>
+
+        <button onclick="moveRight()">➡️</button>
+
+    </div>
+
+    <a class="back" href="index.html">
+        ← Back to ARCADE 10
+    </a>
+
+</main>
+
+<script>
+
+const track = document.getElementById("track");
+const car = document.getElementById("car");
+
+const scoreText = document.getElementById("score");
+const livesText = document.getElementById("lives");
+const levelText = document.getElementById("speed");
+const message = document.getElementById("message");
+const startButton = document.getElementById("startButton");
+
+let lane = 1;
+let score = 0;
+let lives = 3;
+let level = 1;
+
+let playing = false;
+let obstacles = [];
+let coins = [];
+
+let gameLoop;
+let spawnLoop;
+
+function setCarPosition() {
+
+    const positions = [
+        16.66,
+        50,
+        83.33
+    ];
+
+    car.style.left =
+        "calc(" + positions[lane] + "% - 27px)";
+}
+
+function moveLeft() {
+
+    if (!playing) return;
+
+    if (lane > 0) {
+        lane--;
+        setCarPosition();
+    }
+}
+
+function moveRight() {
+
+    if (!playing) return;
+
+    if (lane < 2) {
+        lane++;
+        setCarPosition();
+    }
+}
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "ArrowLeft") {
+        moveLeft();
+    }
+
+    if (event.key === "ArrowRight") {
+        moveRight();
+    }
+
+});
+
+function startGame() {
+
+    if (playing) return;
+
+    playing = true;
+
+    score = 0;
+    lives = 3;
+    level = 1;
+    lane = 1;
+
+    scoreText.textContent = score;
+    livesText.textContent = lives;
+    levelText.textContent = level;
+
+    message.textContent = "🏁 GO!";
+
+    startButton.textContent = "RACING...";
+
+    clearTrack();
+
+    setCarPosition();
+
+    spawnLoop = setInterval(spawnObject, 850);
+
+    gameLoop = requestAnimationFrame(updateGame);
+
+}
+
+function clearTrack() {
+
+    obstacles.forEach(obj => obj.element.remove());
+    coins.forEach(obj => obj.element.remove());
+
+    obstacles = [];
+    coins = [];
+
+}
+
+function spawnObject() {
+
+    if (!playing) return;
+
+    const randomLane =
+        Math.floor(Math.random() * 3);
+
+    const isCoin =
+        Math.random() < 0.28;
+
+    const element =
+        document.createElement("div");
+
+    element.style.left =
+        "calc(" +
+        [16.66, 50, 83.33][randomLane] +
+        "% - " +
+        (isCoin ? "17px" : "27px") +
+        ")";
+
+    element.style.top = "-90px";
+
+    track.appendChild(element);
+
+    if (isCoin) {
+
+        element.className = "coin";
+        element.textContent = "★";
+
+        coins.push({
+            element: element,
+            lane: randomLane,
+            y: -90
+        });
+
+    } else {
+
+        element.className = "obstacle";
+
+        obstacles.push({
+            element: element,
+            lane: randomLane,
+            y: -90
+        });
+
+    }
+
+}
+
+function updateGame() {
+
+    if (!playing) return;
+
+    const speed = 4 + level * 1.2;
+
+    obstacles.forEach((obj, index) => {
+
+        obj.y += speed;
+
+        obj.element.style.top =
+            obj.y + "px";
+
+        if (
+            obj.lane === lane &&
+            obj.y > track.clientHeight - 150 &&
+            obj.y < track.clientHeight - 40
+        ) {
+
+            crash(obj);
+
+        }
+
+        if (obj.y > track.clientHeight) {
+
+            obj.element.remove();
+            obstacles.splice(index,1);
+
+            score += 10;
+
+            updateScore();
+
+        }
+
+    });
+
+    coins.forEach((obj, index) => {
+
+        obj.y += speed;
+
+        obj.element.style.top =
+            obj.y + "px";
+
+        if (
+            obj.lane === lane &&
+            obj.y > track.clientHeight - 150 &&
+            obj.y < track.clientHeight - 40
+        ) {
+
+            score += 50;
+
+            updateScore();
+
+            message.textContent =
+                "⭐ BONUS +50!";
+
+            obj.element.remove();
+            coins.splice(index,1);
+
+        }
+
+        if (obj.y > track.clientHeight) {
+
+            obj.element.remove();
+            coins.splice(index,1);
+
+        }
+
+    });
+
+    if (score >= level * 250) {
+
+        level++;
+
+        levelText.textContent = level;
+
+        message.textContent =
+            "🔥 LEVEL " + level + "!";
+
+    }
+
+    gameLoop =
+        requestAnimationFrame(updateGame);
+
+}
+
+function crash(obj) {
+
+    obj.element.remove();
+
+    const index =
+        obstacles.indexOf(obj);
+
+    if (index !== -1) {
+        obstacles.splice(index,1);
+    }
+
+    lives--;
+
+    livesText.textContent = lives;
+
+    message.textContent =
+        "💥 CRASH!";
+
+    if (lives <= 0) {
+
+        endGame();
+
+    }
+
+}
+
+function updateScore() {
+
+    scoreText.textContent = score;
+
+}
+
+function endGame() {
+
+    playing = false;
+
+    clearInterval(spawnLoop);
+    cancelAnimationFrame(gameLoop);
+
+    startButton.textContent =
+        "RACE AGAIN";
+
+    message.textContent =
+        "🏆 GAME OVER — SCORE: " + score;
+
+    const oldScore =
+        Number(localStorage.getItem("arcade10Score")) || 0;
+
+    if (score > oldScore) {
+
+        localStorage.setItem(
+            "arcade10Score",
+            score
+        );
+
+        message.textContent +=
+            " • NEW HIGH SCORE!";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
