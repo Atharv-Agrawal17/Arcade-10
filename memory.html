@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Sports Memory | ARCADE 10</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#07111f;
+    color:white;
+    text-align:center;
+}
+
+header{
+    padding:18px;
+    background:#0b1d30;
+    border-bottom:1px solid #294963;
+}
+
+header h1{
+    margin:0;
+    font-size:34px;
+}
+
+.subtitle{
+    color:#9db5c8;
+    margin-top:5px;
+}
+
+.game{
+    max-width:800px;
+    margin:auto;
+    padding:15px;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+}
+
+.stat{
+    background:#10283e;
+    padding:10px 22px;
+    border-radius:15px;
+    min-width:95px;
+}
+
+.stat strong{
+    display:block;
+    color:#ffd43b;
+    font-size:24px;
+}
+
+.stat span{
+    font-size:11px;
+    color:#9db5c8;
+}
+
+
+/* LEVEL BUTTONS */
+
+.levels{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+}
+
+.level{
+    border:none;
+    padding:11px 20px;
+    border-radius:22px;
+    background:#17344c;
+    color:white;
+    font-weight:bold;
+}
+
+.level.active{
+    background:#ffd43b;
+    color:#111;
+}
+
+
+/* BOARD */
+
+.board{
+    display:grid;
+    gap:10px;
+    max-width:650px;
+    margin:auto;
+}
+
+
+/* CARD */
+
+.card{
+    aspect-ratio:1/1;
+
+    border-radius:15px;
+
+    cursor:pointer;
+
+    perspective:700px;
+}
+
+.inner{
+    width:100%;
+    height:100%;
+
+    position:relative;
+
+    transition:
+    transform .4s;
+
+    transform-style:preserve-3d;
+}
+
+.card.flipped .inner,
+.card.matched .inner{
+    transform:rotateY(180deg);
+}
+
+.front,
+.back{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:15px;
+
+    backface-visibility:hidden;
+}
+
+.front{
+    background:#17344c;
+
+    border:2px solid #315875;
+
+    font-size:30px;
+}
+
+.back{
+    background:#10283e;
+
+    border:2px solid #ffd43b;
+
+    transform:rotateY(180deg);
+
+    font-size:45px;
+}
+
+.matched .back{
+    border-color:#42d392;
+}
+
+
+/* MESSAGE */
+
+.message{
+    min-height:30px;
+    margin:18px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+
+/* START */
+
+.start{
+    border:none;
+    padding:14px 30px;
+    border-radius:25px;
+    background:#ffd43b;
+    color:#111;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.backLink{
+    display:block;
+    margin:18px;
+    color:#ffd43b;
+    text-decoration:none;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .board{
+        gap:7px;
+    }
+
+    .back{
+        font-size:35px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>🧩 SPORTS MEMORY</h1>
+
+<div class="subtitle">
+ARCADE 10 • GAME 09
+</div>
+
+</header>
+
+
+<main class="game">
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+
+<strong id="score">
+0
+</strong>
+
+<span>SCORE</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="moves">
+0
+</strong>
+
+<span>MOVES</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="pairs">
+0
+</strong>
+
+<span>PAIRS</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="levelText">
+EASY
+</strong>
+
+<span>LEVEL</span>
+
+</div>
+
+</div>
+
+
+
+<!-- LEVELS -->
+
+<div class="levels">
+
+<button
+class="level active"
+onclick="setLevel('easy',this)">
+
+EASY
+
+</button>
+
+
+<button
+class="level"
+onclick="setLevel('medium',this)">
+
+MEDIUM
+
+</button>
+
+
+<button
+class="level"
+onclick="setLevel('hard',this)">
+
+HARD
+
+</button>
+
+</div>
+
+
+
+<!-- BOARD -->
+
+<div
+class="board"
+id="board">
+
+</div>
+
+
+
+<div
+class="message"
+id="message">
+
+Choose a level and press START!
+
+</div>
+
+
+
+<button
+class="start"
+id="startButton"
+onclick="startGame()">
+
+START GAME
+
+</button>
+
+
+<a
+class="backLink"
+href="index.html">
+
+← Back to ARCADE 10
+
+</a>
+
+
+</main>
+
+
+
+<script>
+
+
+const board =
+document.getElementById("board");
+
+const scoreText =
+document.getElementById("score");
+
+const movesText =
+document.getElementById("moves");
+
+const pairsText =
+document.getElementById("pairs");
+
+const levelText =
+document.getElementById("levelText");
+
+const message =
+document.getElementById("message");
+
+const startButton =
+document.getElementById("startButton");
+
+
+/*
+SPORT ICONS
+*/
+
+const sports = [
+
+"⚽",
+"🏀",
+"🏈",
+"⚾",
+"🎾",
+"🏐",
+"🏓",
+"🏸",
+"🥊",
+"🏒",
+"🥎",
+"⛳"
+
+];
+
+
+let level = "easy";
+
+let cards = [];
+
+let flipped = [];
+
+let matched = 0;
+
+let moves = 0;
+
+let score = 0;
+
+let playing = false;
+
+let lock = false;
+
+
+/* LEVEL */
+
+function setLevel(newLevel,button){
+
+    if(playing) return;
+
+    level = newLevel;
+
+    document
+    .querySelectorAll(".level")
+    .forEach(function(btn){
+
+        btn.classList.remove("active");
+
+    });
+
+    button.classList.add("active");
+
+    levelText.textContent =
+    level.toUpperCase();
+
+}
+
+
+/* START */
+
+function startGame(){
+
+    playing = true;
+
+    flipped = [];
+
+    matched = 0;
+
+    moves = 0;
+
+    score = 0;
+
+    lock = false;
+
+
+    scoreText.textContent =
+    score;
+
+    movesText.textContent =
+    moves;
+
+    pairsText.textContent =
+    matched;
+
+
+    startButton.style.display =
+    "none";
+
+
+    message.textContent =
+    "Find the matching sports!";
+
+
+    createBoard();
+
+}
+
+
+/* CREATE BOARD */
+
+function createBoard(){
+
+    board.innerHTML =
+    "";
+
+
+    let pairs;
+
+
+    if(level === "easy"){
+
+        pairs = 3;
+
+        board.style.gridTemplateColumns =
+        "repeat(3,1fr)";
+
+    }
+
+    else if(level === "medium"){
+
+        pairs = 4;
+
+        board.style.gridTemplateColumns =
+        "repeat(4,1fr)";
+
+    }
+
+    else{
+
+        pairs = 6;
+
+        board.style.gridTemplateColumns =
+        "repeat(4,1fr)";
+
+    }
+
+
+    cards =
+    sports
+    .slice(0,pairs)
+    .concat(
+        sports.slice(0,pairs)
+    );
+
+
+    /*
+    SHUFFLE
+    */
+
+    cards.sort(
+        () =>
+        Math.random() - .5
+    );
+
+
+    cards.forEach(function(icon,index){
+
+        const card =
+        document.createElement("div");
+
+        card.className =
+        "card";
+
+
+        card.dataset.icon =
+        icon;
+
+
+        card.innerHTML = `
+
+        <div class="inner">
+
+            <div class="front">
+                ?
+            </div>
+
+            <div class="back">
+                ${icon}
+            </div>
+
+        </div>
+
+        `;
+
+
+        card.onclick =
+        function(){
+
+            flipCard(card);
+
+        };
+
+
+        board.appendChild(card);
+
+    });
+
+}
+
+
+/* FLIP */
+
+function flipCard(card){
+
+    if(
+        !playing ||
+        lock ||
+        card.classList.contains("flipped") ||
+        card.classList.contains("matched")
+    ){
+
+        return;
+
+    }
+
+
+    card.classList.add("flipped");
+
+    flipped.push(card);
+
+
+    if(flipped.length === 2){
+
+        moves++;
+
+        movesText.textContent =
+        moves;
+
+        checkMatch();
+
+    }
+
+}
+
+
+/* CHECK */
+
+function checkMatch(){
+
+    lock = true;
+
+
+    const first =
+    flipped[0];
+
+    const second =
+    flipped[1];
+
+
+    if(
+        first.dataset.icon ===
+        second.dataset.icon
+    ){
+
+        first.classList.add("matched");
+
+        second.classList.add("matched");
+
+
+        matched++;
+
+
+        let points =
+        level === "easy"
+        ? 100
+        : level === "medium"
+        ? 150
+        : 200;
+
+
+        score += points;
+
+
+        scoreText.textContent =
+        score;
+
+        pairsText.textContent =
+        matched;
+
+
+        message.textContent =
+        "🎉 MATCH! +" + points;
+
+
+        flipped = [];
+
+        lock = false;
+
+
+        /*
+        WIN
+        */
+
+        if(
+            matched ===
+            cards.length / 2
+        ){
+
+            winGame();
+
+        }
+
+    }
+
+    else{
+
+        message.textContent =
+        "❌ Not a match";
+
+
+        setTimeout(function(){
+
+            first.classList.remove(
+                "flipped"
+            );
+
+            second.classList.remove(
+                "flipped"
+            );
+
+
+            flipped = [];
+
+            lock = false;
+
+        },700);
+
+    }
+
+}
+
+
+/* WIN */
+
+function winGame(){
+
+    playing = false;
+
+    message.textContent =
+    "🏆 YOU WON! Score: " +
+    score;
+
+
+    startButton.style.display =
+    "inline-block";
+
+
+    startButton.textContent =
+    "PLAY AGAIN";
+
+
+    saveScore();
+
+}
+
+
+/* SAVE */
+
+function saveScore(){
+
+    const oldScore =
+    Number(
+        localStorage.getItem("arcade10Score")
+    ) || 0;
+
+
+    if(score > oldScore){
+
+        localStorage.setItem(
+            "arcade10Score",
+            score
+        );
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>
