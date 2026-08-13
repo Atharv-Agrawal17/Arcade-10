@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>Goalkeeper Hero | ARCADE 10</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#07111f;
+    color:white;
+    text-align:center;
+    touch-action:none;
+}
+
+header{
+    padding:18px;
+    background:#0b1d30;
+    border-bottom:1px solid #294963;
+}
+
+header h1{
+    margin:0;
+    font-size:34px;
+}
+
+.subtitle{
+    color:#9db5c8;
+    margin-top:5px;
+}
+
+.game{
+    max-width:750px;
+    margin:auto;
+    padding:15px;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:15px;
+    flex-wrap:wrap;
+}
+
+.stat{
+    background:#10283e;
+    padding:10px 22px;
+    border-radius:15px;
+    min-width:95px;
+}
+
+.stat strong{
+    display:block;
+    color:#ffd43b;
+    font-size:24px;
+}
+
+.stat span{
+    font-size:11px;
+    color:#9db5c8;
+}
+
+
+/* GOAL */
+
+.goal{
+    position:relative;
+    width:min(94vw,650px);
+    height:500px;
+    margin:auto;
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        to bottom,
+        #287b3c,
+        #145b2b
+    );
+
+    border:5px solid white;
+    border-radius:20px;
+}
+
+
+/* NET */
+
+.goal::before{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+    repeating-linear-gradient(
+        0deg,
+        transparent 0,
+        transparent 28px,
+        rgba(255,255,255,.18) 29px,
+        transparent 30px
+    ),
+    repeating-linear-gradient(
+        90deg,
+        transparent 0,
+        transparent 28px,
+        rgba(255,255,255,.18) 29px,
+        transparent 30px
+    );
+
+    pointer-events:none;
+}
+
+
+/* POSTS */
+
+.post{
+    position:absolute;
+    background:white;
+    z-index:2;
+}
+
+.top{
+    top:35px;
+    left:5%;
+    width:90%;
+    height:9px;
+}
+
+.left{
+    top:35px;
+    left:5%;
+    width:9px;
+    height:330px;
+}
+
+.right{
+    top:35px;
+    right:5%;
+    width:9px;
+    height:330px;
+}
+
+
+/* BALL */
+
+.ball{
+    position:absolute;
+
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+
+    background:white;
+
+    color:#111;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:24px;
+
+    z-index:5;
+
+    transition:
+    left .4s,
+    top .4s,
+    transform .4s;
+
+    box-shadow:
+    0 5px 15px rgba(0,0,0,.35);
+}
+
+
+/* KEEPER */
+
+.keeper{
+    position:absolute;
+
+    width:120px;
+    height:85px;
+
+    left:calc(50% - 60px);
+    bottom:65px;
+
+    z-index:6;
+
+    transition:left .15s;
+}
+
+.body{
+    position:absolute;
+
+    width:60px;
+    height:70px;
+
+    left:30px;
+
+    background:#1976d2;
+
+    border-radius:20px 20px 10px 10px;
+}
+
+.head{
+    position:absolute;
+
+    width:48px;
+    height:48px;
+
+    left:36px;
+    top:-25px;
+
+    background:#f1b58b;
+
+    border-radius:50%;
+
+    border:3px solid white;
+}
+
+.arm{
+    position:absolute;
+
+    width:50px;
+    height:16px;
+
+    background:#1976d2;
+
+    border-radius:15px;
+
+    top:25px;
+}
+
+.arm.leftArm{
+    left:-12px;
+    transform:rotate(-25deg);
+}
+
+.arm.rightArm{
+    right:-12px;
+    transform:rotate(25deg);
+}
+
+
+/* CONTROLS */
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:12px;
+}
+
+.controls button,
+.start{
+    border:none;
+    padding:14px 25px;
+    border-radius:25px;
+    background:#ffd43b;
+    color:#111;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.controls button:active{
+    transform:scale(.9);
+}
+
+.start{
+    margin-top:12px;
+}
+
+
+/* MESSAGE */
+
+.message{
+    min-height:30px;
+    margin:12px;
+    font-size:21px;
+    font-weight:bold;
+}
+
+
+/* BACK */
+
+.back{
+    display:block;
+    margin:15px;
+    color:#ffd43b;
+    text-decoration:none;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .goal{
+        height:440px;
+    }
+
+    .keeper{
+        bottom:45px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>🥅 GOALKEEPER HERO</h1>
+
+<div class="subtitle">
+ARCADE 10 • GAME 05
+</div>
+
+</header>
+
+
+<main class="game">
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+
+<strong id="score">
+0
+</strong>
+
+<span>SCORE</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="saves">
+0
+</strong>
+
+<span>SAVES</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="shots">
+10
+</strong>
+
+<span>SHOTS</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="level">
+1
+</strong>
+
+<span>LEVEL</span>
+
+</div>
+
+</div>
+
+
+
+<!-- GOAL -->
+
+<div class="goal" id="goal">
+
+<div class="post top"></div>
+
+<div class="post left"></div>
+
+<div class="post right"></div>
+
+
+<div class="ball" id="ball">
+⚽
+</div>
+
+
+<div class="keeper" id="keeper">
+
+<div class="head"></div>
+
+<div class="body"></div>
+
+<div class="arm leftArm"></div>
+
+<div class="arm rightArm"></div>
+
+</div>
+
+</div>
+
+
+
+<div class="message" id="message">
+
+Tap START to defend the goal!
+
+</div>
+
+
+
+<button
+class="start"
+id="startButton"
+onclick="startGame()">
+
+START GAME
+
+</button>
+
+
+<div class="controls">
+
+<button onclick="moveKeeper(-1)">
+⬅️ LEFT
+</button>
+
+<button onclick="moveKeeper(1)">
+➡️ RIGHT
+</button>
+
+</div>
+
+
+<a
+class="back"
+href="index.html">
+
+← Back to ARCADE 10
+
+</a>
+
+
+</main>
+
+
+
+<script>
+
+
+const goal =
+document.getElementById("goal");
+
+const ball =
+document.getElementById("ball");
+
+const keeper =
+document.getElementById("keeper");
+
+const scoreText =
+document.getElementById("score");
+
+const savesText =
+document.getElementById("saves");
+
+const shotsText =
+document.getElementById("shots");
+
+const levelText =
+document.getElementById("level");
+
+const message =
+document.getElementById("message");
+
+const startButton =
+document.getElementById("startButton");
+
+
+let score = 0;
+
+let saves = 0;
+
+let shots = 10;
+
+let level = 1;
+
+let keeperPosition = 50;
+
+let playing = false;
+
+let shotTimer;
+
+
+
+function startGame(){
+
+    if(playing) return;
+
+    score = 0;
+    saves = 0;
+    shots = 10;
+    level = 1;
+
+    keeperPosition = 50;
+
+    playing = true;
+
+    scoreText.textContent = score;
+    savesText.textContent = saves;
+    shotsText.textContent = shots;
+    levelText.textContent = level;
+
+    startButton.textContent =
+    "PLAYING...";
+
+    message.textContent =
+    "🥅 GET READY!";
+
+    moveKeeper(0);
+
+    nextShot();
+
+}
+
+
+
+function moveKeeper(direction){
+
+    if(!playing) return;
+
+    keeperPosition +=
+    direction * 18;
+
+    keeperPosition =
+    Math.max(
+        12,
+        Math.min(88,keeperPosition)
+    );
+
+    keeper.style.left =
+    "calc(" +
+    keeperPosition +
+    "% - 60px)";
+
+}
+
+
+
+function nextShot(){
+
+    if(!playing) return;
+
+    if(shots <= 0){
+
+        endGame();
+
+        return;
+
+    }
+
+
+    shotsText.textContent =
+    shots;
+
+
+    /*
+    RANDOM BALL POSITION
+    */
+
+    const target =
+    15 +
+    Math.random() * 70;
+
+
+    ball.style.left =
+    "calc(" +
+    target +
+    "% - 22px)";
+
+    ball.style.top =
+    "45px";
+
+
+    ball.style.transform =
+    "scale(1)";
+
+
+    message.textContent =
+    "⚽ SAVE IT!";
+
+
+    /*
+    BALL MOVES TOWARD KEEPER
+    */
+
+    setTimeout(function(){
+
+        if(!playing) return;
+
+
+        ball.style.top =
+        "350px";
+
+        ball.style.transform =
+        "scale(.7)";
+
+
+        setTimeout(function(){
+
+            checkSave(target);
+
+        },400);
+
+    },500);
+
+}
+
+
+
+function checkSave(target){
+
+    /*
+    KEEPER COVERS ABOUT 18%
+    */
+
+    const difference =
+    Math.abs(
+        target - keeperPosition
+    );
+
+
+    if(difference < 16){
+
+        /*
+        SAVE
+        */
+
+        saves++;
+
+        let points =
+        100 * level;
+
+        score += points;
+
+        savesText.textContent =
+        saves;
+
+        scoreText.textContent =
+        score;
+
+        message.textContent =
+        "🧤 GREAT SAVE! +" + points;
+
+
+        if(
+            saves % 3 === 0 &&
+            level < 3
+        ){
+
+            level++;
+
+            levelText.textContent =
+            level;
+
+            message.textContent =
+            "🔥 LEVEL " + level + "!";
+
+        }
+
+    }
+
+    else{
+
+        message.textContent =
+        "⚽ GOAL!";
+
+    }
+
+
+    shots--;
+
+    shotsText.textContent =
+    shots;
+
+
+    /*
+    RESET BALL
+    */
+
+    setTimeout(function(){
+
+        ball.style.top =
+        "45px";
+
+        ball.style.transform =
+        "scale(1)";
+
+
+        setTimeout(function(){
+
+            nextShot();
+
+        },350);
+
+    },650);
+
+}
+
+
+
+function endGame(){
+
+    playing = false;
+
+    clearTimeout(shotTimer);
+
+    startButton.textContent =
+    "PLAY AGAIN";
+
+    message.textContent =
+    "🏆 FINAL SCORE: " + score +
+    " • SAVES: " + saves;
+
+    saveScore();
+
+}
+
+
+
+function saveScore(){
+
+    const oldScore =
+    Number(
+        localStorage.getItem("arcade10Score")
+    ) || 0;
+
+
+    if(score > oldScore){
+
+        localStorage.setItem(
+            "arcade10Score",
+            score
+        );
+
+    }
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
