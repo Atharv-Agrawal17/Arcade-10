@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ARCADE 10</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -15,13 +17,13 @@
 body{
     font-family:Arial,Helvetica,sans-serif;
     background:
-        radial-gradient(circle at top,#193b5c 0,#07111f 45%,#030812 100%);
+        radial-gradient(circle at top,#193b5c,#07111f 50%,#030812);
     color:white;
     min-height:100vh;
     overflow-x:hidden;
 }
 
-/* TOP BAR */
+/* NAVBAR */
 
 .navbar{
     height:70px;
@@ -29,8 +31,8 @@ body{
     justify-content:space-between;
     align-items:center;
     padding:0 35px;
-    background:rgba(3,8,18,.85);
-    border-bottom:1px solid #24435e;
+    background:rgba(3,8,18,.9);
+    border-bottom:1px solid #294963;
     position:sticky;
     top:0;
     z-index:100;
@@ -49,7 +51,7 @@ body{
 
 .nav-buttons{
     display:flex;
-    gap:12px;
+    gap:10px;
 }
 
 .nav-buttons button{
@@ -66,6 +68,7 @@ body{
     color:#111;
 }
 
+
 /* HERO */
 
 .hero{
@@ -75,7 +78,6 @@ body{
     justify-content:center;
     text-align:center;
     padding:60px 20px;
-    position:relative;
 }
 
 .hero-content{
@@ -94,7 +96,6 @@ body{
     font-size:clamp(60px,12vw,130px);
     line-height:.9;
     letter-spacing:8px;
-    text-shadow:0 10px 35px rgba(0,0,0,.5);
 }
 
 .hero h1 span{
@@ -116,13 +117,13 @@ body{
     font-size:22px;
     font-weight:900;
     cursor:pointer;
-    box-shadow:0 10px 30px rgba(255,212,59,.25);
     transition:.2s;
 }
 
 .play:hover{
     transform:scale(1.07);
 }
+
 
 /* STATS */
 
@@ -154,7 +155,8 @@ body{
     margin-top:5px;
 }
 
-/* SECTION */
+
+/* GAMES */
 
 .section{
     max-width:1150px;
@@ -163,9 +165,6 @@ body{
 }
 
 .section-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:end;
     margin-bottom:25px;
 }
 
@@ -175,9 +174,8 @@ body{
 
 .section-title p{
     color:#849bae;
+    margin-top:5px;
 }
-
-/* GAME GRID */
 
 .game-grid{
     display:grid;
@@ -199,7 +197,6 @@ body{
 .game-card:hover{
     transform:translateY(-7px);
     border-color:#ffd43b;
-    box-shadow:0 15px 40px rgba(0,0,0,.3);
 }
 
 .game-number{
@@ -224,13 +221,13 @@ body{
 .game-card p{
     color:#9fb2c2;
     line-height:1.5;
-    max-width:450px;
 }
 
 .levels{
     display:flex;
     gap:7px;
     margin:17px 0;
+    flex-wrap:wrap;
 }
 
 .level{
@@ -251,16 +248,16 @@ body{
     border:none;
     padding:11px 20px;
     border-radius:20px;
-    background:#1b3951;
-    color:white;
+    background:#ffd43b;
+    color:#111;
     font-weight:bold;
     cursor:pointer;
 }
 
 .game-button:hover{
-    background:#ffd43b;
-    color:#111;
+    transform:scale(1.05);
 }
+
 
 /* CHAMPIONSHIP */
 
@@ -268,8 +265,7 @@ body{
     margin-top:30px;
     padding:45px;
     border-radius:28px;
-    background:
-        linear-gradient(120deg,#182f46,#0a1828);
+    background:linear-gradient(120deg,#182f46,#0a1828);
     border:1px solid #3d5d76;
     text-align:center;
 }
@@ -289,6 +285,7 @@ body{
     margin:0 auto 25px;
     line-height:1.6;
 }
+
 
 /* HOW TO PLAY */
 
@@ -317,6 +314,7 @@ body{
     line-height:1.5;
 }
 
+
 /* FOOTER */
 
 footer{
@@ -336,7 +334,8 @@ footer p{
     margin-top:10px;
 }
 
-/* RESPONSIVE */
+
+/* MOBILE */
 
 @media(max-width:750px){
 
@@ -373,10 +372,13 @@ footer p{
         padding:30px 20px;
     }
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <!-- NAVIGATION -->
 
@@ -387,8 +389,15 @@ footer p{
     </div>
 
     <div class="nav-buttons">
-        <button onclick="scrollToGames()">Games</button>
-        <button onclick="showAbout()">About</button>
+
+        <button onclick="scrollToGames()">
+            Games
+        </button>
+
+        <button onclick="showAbout()">
+            About
+        </button>
+
     </div>
 
 </nav>
@@ -426,33 +435,60 @@ footer p{
 <section class="stats">
 
     <div class="stat">
-        <div class="stat-number" id="score">0</div>
-        <div class="stat-label">TOTAL SCORE</div>
+
+        <div class="stat-number" id="score">
+            0
+        </div>
+
+        <div class="stat-label">
+            TOTAL SCORE
+        </div>
+
     </div>
 
-    <div class="stat">
-        <div class="stat-number">10</div>
-        <div class="stat-label">GAMES</div>
-    </div>
 
     <div class="stat">
-        <div class="stat-number" id="level">1</div>
-        <div class="stat-label">CURRENT LEVEL</div>
+
+        <div class="stat-number">
+            10
+        </div>
+
+        <div class="stat-label">
+            GAMES
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-number" id="level">
+            1
+        </div>
+
+        <div class="stat-label">
+            CURRENT LEVEL
+        </div>
+
     </div>
 
 </section>
 
 
-<!-- GAMES -->
+
+<!-- GAME SECTION -->
 
 <section class="section" id="games">
 
     <div class="section-title">
 
-        <div>
-            <h2>🏆 THE 10 GAMES</h2>
-            <p>Choose your challenge.</p>
-        </div>
+        <h2>
+            🏆 THE 10 GAMES
+        </h2>
+
+        <p>
+            Choose your challenge.
+        </p>
 
     </div>
 
@@ -460,298 +496,518 @@ footer p{
     <div class="game-grid">
 
 
-        <!-- GAME 1 -->
+        <!-- 01 -->
 
         <div class="game-card">
 
-            <div class="game-number">01</div>
+            <div class="game-number">
+                01
+            </div>
 
-            <div class="game-icon">⚽</div>
+            <div class="game-icon">
+                ⚽
+            </div>
 
-            <h3>Penalty Master</h3>
+            <h3>
+                Penalty Master
+            </h3>
 
             <p>
                 Step up to the penalty spot and beat the goalkeeper.
             </p>
 
             <div class="levels">
-                <span class="level active">EASY</span>
-                <span class="level">PRO</span>
-                <span class="level">LEGEND</span>
+
+                <span class="level active">
+                    EASY
+                </span>
+
+                <span class="level">
+                    PRO
+                </span>
+
+                <span class="level">
+                    LEGEND
+                </span>
+
             </div>
 
-            <button class="game-button" onclick="comingSoon('Penalty Master')">
+            <button
+                class="game-button"
+                onclick="location.href='penalty.html'">
+
                 PLAY
+
             </button>
 
         </div>
 
 
-        <!-- GAME 2 -->
+
+        <!-- 02 -->
 
         <div class="game-card">
 
-            <div class="game-number">02</div>
+            <div class="game-number">
+                02
+            </div>
 
-            <div class="game-icon">🏎️</div>
+            <div class="game-icon">
+                🏎️
+            </div>
 
-            <h3>Racing Rush</h3>
+            <h3>
+                Racing Rush
+            </h3>
 
             <p>
                 Race through the track and avoid every obstacle.
             </p>
 
             <div class="levels">
-                <span class="level active">EASY</span>
-                <span class="level">PRO</span>
-                <span class="level">LEGEND</span>
+
+                <span class="level active">
+                    EASY
+                </span>
+
+                <span class="level">
+                    PRO
+                </span>
+
+                <span class="level">
+                    LEGEND
+                </span>
+
             </div>
 
-            <button class="game-button" onclick="comingSoon('Racing Rush')">
+            <button
+                class="game-button"
+                onclick="comingSoon('Racing Rush')">
+
                 PLAY
+
             </button>
 
         </div>
 
 
-        <!-- GAME 3 -->
+
+        <!-- 03 -->
 
         <div class="game-card">
 
-            <div class="game-number">03</div>
+            <div class="game-number">
+                03
+            </div>
 
-            <div class="game-icon">🏀</div>
+            <div class="game-icon">
+                🏀
+            </div>
 
-            <h3>Hoop Challenge</h3>
+            <h3>
+                Hoop Challenge
+            </h3>
 
             <p>
                 Take your shots and score as many baskets as possible.
             </p>
 
             <div class="levels">
-                <span class="level active">ROOKIE</span>
-                <span class="level">PRO</span>
-                <span class="level">ALL-STAR</span>
+
+                <span class="level active">
+                    ROOKIE
+                </span>
+
+                <span class="level">
+                    PRO
+                </span>
+
+                <span class="level">
+                    ALL-STAR
+                </span>
+
             </div>
 
-            <button class="game-button" onclick="comingSoon('Hoop Challenge')">
+            <button
+                class="game-button"
+                onclick="comingSoon('Hoop Challenge')">
+
                 PLAY
+
             </button>
 
         </div>
 
 
-        <!-- GAME 4 -->
+
+        <!-- 04 -->
 
         <div class="game-card">
 
-            <div class="game-number">04</div>
+            <div class="game-number">
+                04
+            </div>
 
-            <div class="game-icon">🎯</div>
+            <div class="game-icon">
+                🎯
+            </div>
 
-            <h3>Target Striker</h3>
+            <h3>
+                Target Striker
+            </h3>
 
             <p>
                 Hit moving targets and become the most accurate striker.
             </p>
 
             <div class="levels">
-                <span class="level active">LEVEL 1</span>
-                <span class="level">LEVEL 2</span>
-                <span class="level">LEVEL 3</span>
+
+                <span class="level active">
+                    LEVEL 1
+                </span>
+
+                <span class="level">
+                    LEVEL 2
+                </span>
+
+                <span class="level">
+                    LEVEL 3
+                </span>
+
             </div>
 
-            <button class="game-button" onclick="comingSoon('Target Striker')">
+            <button
+                class="game-button"
+                onclick="comingSoon('Target Striker')">
+
                 PLAY
+
             </button>
 
         </div>
 
 
-        <!-- GAME 5 -->
+
+        <!-- 05 -->
 
         <div class="game-card">
 
-            <div class="game-number">05</div>
+            <div class="game-number">
+                05
+            </div>
 
-            <div class="game-icon">🥅</div>
+            <div class="game-icon">
+                🥅
+            </div>
 
-            <h3>Goalkeeper Hero</h3>
+            <h3>
+                Goalkeeper Hero
+            </h3>
 
             <p>
                 Protect the goal and save incoming shots.
             </p>
 
             <div class="levels">
-                <span class="level active">ROOKIE</span>
-                <span class="level">PRO</span>
-                <span class="level">WORLD CLASS</span>
+
+                <span class="level active">
+                    ROOKIE
+                </span>
+
+                <span class="level">
+                    PRO
+                </span>
+
+                <span class="level">
+                    WORLD CLASS
+                </span>
+
             </div>
 
-            <button class="game-button" onclick="comingSoon('Goalkeeper Hero')">
+            <button
+                class="game-button"
+                onclick="comingSoon('Goalkeeper Hero')">
+
                 PLAY
+
             </button>
 
         </div>
 
 
-        <!-- GAME 6 -->
+
+        <!-- 06 -->
 
         <div class="game-card">
 
-            <div class="game-number">06</div>
+            <div class="game-number">
+                06
+            </div>
 
-            <div class="game-icon">🧠</div>
+            <div class="game-icon">
+                🧠
+            </div>
 
-            <h3>Sports Quiz</h3>
+            <h3>
+                Sports Quiz
+            </h3>
 
             <p>
                 Test your knowledge of sports from around the world.
             </p>
 
             <div class="levels">
-                <span class="level active">EASY</span>
-                <span class="level">MEDIUM</span>
-                <span class="level">HARD</span>
+
+                <span class="level active">
+                    EASY
+                </span>
+
+                <span class="level">
+                    MEDIUM
+                </span>
+
+                <span class="level">
+                    HARD
+                </span>
+
             </div>
 
-            <button class="game-button" onclick="comingSoon('Sports Quiz')">
+            <button
+                class="game-button"
+                onclick="comingSoon('Sports Quiz')">
+
                 PLAY
+
             </button>
 
         </div>
 
 
-        <!-- GAME 7 -->
+
+        <!-- 07 -->
 
         <div class="game-card">
 
-            <div class="game-number">07</div>
+            <div class="game-number">
+                07
+            </div>
 
-            <div class="game-icon">⚡</div>
+            <div class="game-icon">
+                ⚡
+            </div>
 
-            <h3>Reaction Champion</h3>
+            <h3>
+                Reaction Champion
+            </h3>
 
             <p>
                 React as quickly as possible when the target appears.
             </p>
 
             <div class="levels">
-                <span class="level active">NORMAL</span>
-                <span class="level">FAST</span>
-                <span class="level">INSANE</span>
+
+                <span class="level active">
+                    NORMAL
+                </span>
+
+                <span class="level">
+                    FAST
+                </span>
+
+                <span class="level">
+                    INSANE
+                </span>
+
             </div>
 
-            <button class="game-button" onclick="comingSoon('Reaction Champion')">
+            <button
+                class="game-button"
+                onclick="comingSoon('Reaction Champion')">
+
                 PLAY
+
             </button>
 
         </div>
 
 
-        <!-- GAME 8 -->
+
+        <!-- 08 -->
 
         <div class="game-card">
 
-            <div class="game-number">08</div>
+            <div class="game-number">
+                08
+            </div>
 
-            <div class="game-icon">🏃</div>
+            <div class="game-icon">
+                🏃
+            </div>
 
-            <h3>Sprint Dash</h3>
+            <h3>
+                Sprint Dash
+            </h3>
 
             <p>
                 Race your athlete to the finish line.
             </p>
 
             <div class="levels">
-                <span class="level active">100M</span>
-                <span class="level">200M</span>
-                <span class="level">400M</span>
+
+                <span class="level active">
+                    100M
+                </span>
+
+                <span class="level">
+                    200M
+                </span>
+
+                <span class="level">
+                    400M
+                </span>
+
             </div>
 
-            <button class="game-button" onclick="comingSoon('Sprint Dash')">
+            <button
+                class="game-button"
+                onclick="comingSoon('Sprint Dash')">
+
                 PLAY
+
             </button>
 
         </div>
 
 
-        <!-- GAME 9 -->
+
+        <!-- 09 -->
 
         <div class="game-card">
 
-            <div class="game-number">09</div>
+            <div class="game-number">
+                09
+            </div>
 
-            <div class="game-icon">🌍</div>
+            <div class="game-icon">
+                🌍
+            </div>
 
-            <h3>Sports Trivia Blitz</h3>
+            <h3>
+                Sports Trivia Blitz
+            </h3>
 
             <p>
-                Answer as many sports questions as you can before time runs out.
+                Answer as many sports questions as possible before time runs out.
             </p>
 
             <div class="levels">
-                <span class="level active">30 SEC</span>
-                <span class="level">20 SEC</span>
-                <span class="level">10 SEC</span>
+
+                <span class="level active">
+                    30 SEC
+                </span>
+
+                <span class="level">
+                    20 SEC
+                </span>
+
+                <span class="level">
+                    10 SEC
+                </span>
+
             </div>
 
-            <button class="game-button" onclick="comingSoon('Sports Trivia Blitz')">
+            <button
+                class="game-button"
+                onclick="comingSoon('Sports Trivia Blitz')">
+
                 PLAY
+
             </button>
 
         </div>
 
 
-        <!-- GAME 10 -->
+
+        <!-- 10 -->
 
         <div class="game-card">
 
-            <div class="game-number">10</div>
+            <div class="game-number">
+                10
+            </div>
 
-            <div class="game-icon">🏆</div>
+            <div class="game-icon">
+                🏆
+            </div>
 
-            <h3>Championship</h3>
+            <h3>
+                Championship
+            </h3>
 
             <p>
-                The ultimate ARCADE 10 tournament. Can you become champion?
+                The ultimate ARCADE 10 tournament.
             </p>
 
             <div class="levels">
-                <span class="level active">ROUND 1</span>
-                <span class="level">ROUND 2</span>
-                <span class="level">FINAL</span>
+
+                <span class="level active">
+                    ROUND 1
+                </span>
+
+                <span class="level">
+                    ROUND 2
+                </span>
+
+                <span class="level">
+                    FINAL
+                </span>
+
             </div>
 
-            <button class="game-button" onclick="comingSoon('ARCADE 10 Championship')">
+            <button
+                class="game-button"
+                onclick="comingSoon('ARCADE 10 Championship')">
+
                 PLAY
+
             </button>
 
         </div>
+
 
     </div>
+
 
 
     <!-- CHAMPIONSHIP -->
 
     <div class="championship">
 
-        <div class="trophy">🏆</div>
+        <div class="trophy">
+            🏆
+        </div>
 
-        <h2>ARCADE 10 CHAMPIONSHIP</h2>
+        <h2>
+            ARCADE 10 CHAMPIONSHIP
+        </h2>
 
         <p>
             Master the games, collect points and prove that you are
             the ultimate ARCADE 10 champion.
         </p>
 
-        <button class="play" onclick="comingSoon('Championship')">
+        <button
+            class="play"
+            onclick="comingSoon('Championship')">
+
             ENTER CHAMPIONSHIP
+
         </button>
 
     </div>
 
 </section>
+
 
 
 <!-- HOW TO PLAY -->
@@ -760,46 +1016,72 @@ footer p{
 
     <div class="section-title">
 
-        <div>
-            <h2>🎮 HOW TO PLAY</h2>
-            <p>Three simple steps.</p>
-        </div>
+        <h2>
+            🎮 HOW TO PLAY
+        </h2>
+
+        <p>
+            Three simple steps.
+        </p>
 
     </div>
 
+
     <div class="instructions">
 
+
         <div class="instruction">
-            <strong>01 — Choose</strong>
+
+            <strong>
+                01 — CHOOSE
+            </strong>
+
             <p>
                 Pick one of the 10 sports games.
             </p>
+
         </div>
 
+
         <div class="instruction">
-            <strong>02 — Play</strong>
+
+            <strong>
+                02 — PLAY
+            </strong>
+
             <p>
                 Beat the challenge and earn points.
             </p>
+
         </div>
 
+
         <div class="instruction">
-            <strong>03 — Become Champion</strong>
+
+            <strong>
+                03 — BECOME CHAMPION
+            </strong>
+
             <p>
                 Master every game and conquer the championship.
             </p>
+
         </div>
+
 
     </div>
 
 </section>
 
 
+
 <!-- FOOTER -->
 
 <footer>
 
-    <h2>ARCADE 10</h2>
+    <h2>
+        ARCADE 10
+    </h2>
 
     <p>
         10 Games • Multiple Levels • One Champion
@@ -812,16 +1094,21 @@ footer p{
 </footer>
 
 
+
 <script>
 
-let totalScore = Number(localStorage.getItem("arcade10Score")) || 0;
+let totalScore =
+Number(localStorage.getItem("arcade10Score")) || 0;
 
-document.getElementById("score").textContent = totalScore;
+document.getElementById("score").textContent =
+totalScore;
 
 
 function scrollToGames(){
 
-    document.getElementById("games").scrollIntoView({
+    document
+    .getElementById("games")
+    .scrollIntoView({
         behavior:"smooth"
     });
 
@@ -832,8 +1119,7 @@ function comingSoon(game){
 
     alert(
         game +
-        " is ready to be built! 🚀\n\n" +
-        "Next we'll turn this button into a REAL playable game."
+        "\n\n🚀 This game is coming next!"
     );
 
 }
@@ -843,14 +1129,15 @@ function showAbout(){
 
     alert(
         "ARCADE 10 🏆\n\n" +
-        "10 sports games and quizzes.\n" +
+        "10 sports games.\n" +
         "Multiple levels.\n" +
-        "One ultimate champion."
+        "One ultimate champion!"
     );
 
 }
 
 </script>
+
 
 </body>
 </html>
