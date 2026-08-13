@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>Arcade Championship | ARCADE 10</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#07111f;
+    color:white;
+    text-align:center;
+    touch-action:manipulation;
+}
+
+header{
+    padding:20px;
+    background:#0b1d30;
+    border-bottom:1px solid #294963;
+}
+
+h1{
+    margin:0;
+    font-size:36px;
+}
+
+.subtitle{
+    color:#9db5c8;
+    margin-top:5px;
+}
+
+.game{
+    max-width:800px;
+    margin:auto;
+    padding:20px 15px;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:#10283e;
+    padding:11px 22px;
+    border-radius:15px;
+    min-width:100px;
+}
+
+.stat strong{
+    display:block;
+    color:#ffd43b;
+    font-size:24px;
+}
+
+.stat span{
+    font-size:11px;
+    color:#9db5c8;
+}
+
+
+/* CARD */
+
+.card{
+    background:
+    linear-gradient(
+        145deg,
+        #142e45,
+        #091827
+    );
+
+    border:1px solid #315875;
+
+    border-radius:25px;
+
+    padding:35px 25px;
+
+    min-height:400px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+
+/* PHASE */
+
+.phase{
+    color:#ffd43b;
+    font-size:14px;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-bottom:15px;
+}
+
+.title{
+    font-size:30px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.instructions{
+    color:#b5c9d8;
+    max-width:550px;
+    line-height:1.5;
+    margin-bottom:25px;
+}
+
+
+/* TARGET */
+
+.target{
+    width:120px;
+    height:120px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        white 0 15%,
+        #e53935 16% 35%,
+        white 36% 55%,
+        #e53935 56% 75%,
+        white 76% 100%
+    );
+
+    border:4px solid white;
+
+    cursor:pointer;
+
+    box-shadow:
+    0 0 30px rgba(255,255,255,.25);
+}
+
+.target:active{
+    transform:scale(.9);
+}
+
+
+/* MEMORY */
+
+.memory{
+    display:grid;
+    grid-template-columns:repeat(4,70px);
+    gap:8px;
+    justify-content:center;
+}
+
+.memoryCard{
+    width:70px;
+    height:70px;
+
+    border-radius:12px;
+
+    background:#17344c;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:34px;
+
+    cursor:pointer;
+
+    border:2px solid #315875;
+}
+
+.memoryCard.revealed{
+    background:#10283e;
+    border-color:#ffd43b;
+}
+
+
+/* BUTTON */
+
+button{
+    border:none;
+    padding:14px 30px;
+    border-radius:25px;
+    background:#ffd43b;
+    color:#111;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:active{
+    transform:scale(.95);
+}
+
+
+/* MESSAGE */
+
+.message{
+    min-height:30px;
+    margin:18px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+
+/* BACK */
+
+.back{
+    display:block;
+    margin:20px;
+    color:#ffd43b;
+    text-decoration:none;
+}
+
+
+@media(max-width:600px){
+
+    .card{
+        padding:25px 15px;
+    }
+
+    .title{
+        font-size:25px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>🏆 ARCADE CHAMPIONSHIP</h1>
+
+<div class="subtitle">
+ARCADE 10 • GAME 10
+</div>
+
+</header>
+
+
+<main class="game">
+
+
+<div class="stats">
+
+<div class="stat">
+
+<strong id="score">
+0
+</strong>
+
+<span>SCORE</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="round">
+0
+</strong>
+
+<span>ROUND</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="lives">
+3
+</strong>
+
+<span>LIVES</span>
+
+</div>
+
+</div>
+
+
+
+<div class="card" id="card">
+
+<div class="phase">
+THE FINAL CHALLENGE
+</div>
+
+<div class="title">
+🏆 ARCADE CHAMPIONSHIP
+</div>
+
+<div class="instructions">
+
+Three challenges.<br>
+
+⚡ Reaction<br>
+🎯 Accuracy<br>
+🧩 Memory
+
+<br><br>
+
+Complete them all to become the
+<strong>ARCADE 10 CHAMPION!</strong>
+
+</div>
+
+<button onclick="startGame()">
+
+START CHAMPIONSHIP
+
+</button>
+
+</div>
+
+
+
+<div
+class="message"
+id="message">
+
+</div>
+
+
+
+<a
+class="back"
+href="index.html">
+
+← Back to ARCADE 10
+
+</a>
+
+
+</main>
+
+
+
+<script>
+
+
+const card =
+document.getElementById("card");
+
+const scoreText =
+document.getElementById("score");
+
+const roundText =
+document.getElementById("round");
+
+const livesText =
+document.getElementById("lives");
+
+const message =
+document.getElementById("message");
+
+
+let score = 0;
+
+let round = 0;
+
+let lives = 3;
+
+let phase = 0;
+
+let reactionStart;
+
+let target;
+
+let memoryFirst = null;
+
+let memorySecond = null;
+
+let memoryLocked = false;
+
+
+/* START */
+
+function startGame(){
+
+    score = 0;
+
+    round = 0;
+
+    lives = 3;
+
+    phase = 1;
+
+
+    updateStats();
+
+    reactionPhase();
+
+}
+
+
+/* STATS */
+
+function updateStats(){
+
+    scoreText.textContent =
+    score;
+
+    roundText.textContent =
+    round;
+
+    livesText.textContent =
+    lives;
+
+}
+
+
+/* PHASE 1 */
+
+function reactionPhase(){
+
+    phase = 1;
+
+    round = 1;
+
+    updateStats();
+
+
+    card.innerHTML = `
+
+        <div class="phase">
+        ROUND 1 / 3
+        </div>
+
+        <div class="title">
+        ⚡ REACTION TEST
+        </div>
+
+        <div class="instructions">
+        Wait for the target.
+        <br>
+        When it appears, TAP IT!
+        </div>
+
+        <div
+        id="reactionArea"
+        style="
+        min-height:150px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        ">
+
+        <div
+        id="reactionTarget"
+        style="
+        width:110px;
+        height:110px;
+        border-radius:50%;
+        background:#17344c;
+        border:4px solid #315875;
+        ">
+        </div>
+
+        </div>
+
+    `;
+
+
+    const reactionTarget =
+    document.getElementById(
+        "reactionTarget"
+    );
+
+
+    message.textContent =
+    "WAIT...";
+
+
+    setTimeout(function(){
+
+        reactionTarget.style.background =
+        "#e53935";
+
+        reactionTarget.style.cursor =
+        "pointer";
+
+        reactionTarget.textContent =
+        "⚡";
+
+        reactionTarget.style.fontSize =
+        "55px";
+
+        reactionTarget.style.display =
+        "flex";
+
+        reactionTarget.style.alignItems =
+        "center";
+
+        reactionTarget.style.justifyContent =
+        "center";
+
+
+        reactionStart =
+        performance.now();
+
+
+        reactionTarget.onclick =
+        finishReaction;
+
+        message.textContent =
+        "⚡ TAP NOW!";
+
+    },1000 + Math.random()*1800);
+
+}
+
+
+/* REACTION COMPLETE */
+
+function finishReaction(){
+
+    const reaction =
+    Math.round(
+        performance.now() -
+        reactionStart
+    );
+
+
+    const points =
+    Math.max(
+        100,
+        600 - reaction
+    );
+
+
+    score += points;
+
+
+    message.textContent =
+    "⚡ " +
+    reaction +
+    " ms! +" +
+    points;
+
+
+    updateStats();
+
+
+    setTimeout(
+        accuracyPhase,
+        1000
+    );
+
+}
+
+
+/* PHASE 2 */
+
+function accuracyPhase(){
+
+    phase = 2;
+
+    round = 2;
+
+    updateStats();
+
+
+    card.innerHTML = `
+
+        <div class="phase">
+        ROUND 2 / 3
+        </div>
+
+        <div class="title">
+        🎯 ACCURACY TEST
+        </div>
+
+        <div class="instructions">
+        Hit the target before it disappears!
+        </div>
+
+        <div
+        id="accuracyArea"
+        style="
+        position:relative;
+        width:100%;
+        height:200px;
+        ">
+
+        </div>
+
+    `;
+
+
+    const area =
+    document.getElementById(
+        "accuracyArea"
+    );
+
+
+    target =
+    document.createElement("div");
+
+
+    target.className =
+    "target";
+
+
+    target.style.position =
+    "absolute";
+
+
+    target.style.left =
+    (10 + Math.random()*70) +
+    "%";
+
+
+    target.style.top =
+    (15 + Math.random()*55) +
+    "%";
+
+
+    target.onclick =
+    finishAccuracy;
+
+
+    area.appendChild(target);
+
+
+    message.textContent =
+    "🎯 HIT IT!";
+
+
+
+    setTimeout(function(){
+
+        if(target){
+
+            target.remove();
+
+            loseLife();
+
+        }
+
+    },1800);
+
+}
+
+
+/* ACCURACY COMPLETE */
+
+function finishAccuracy(){
+
+    if(!target) return;
+
+    target.remove();
+
+    target = null;
+
+
+    score += 300;
+
+
+    message.textContent =
+    "🎯 PERFECT! +300";
+
+
+    updateStats();
+
+
+    setTimeout(
+        memoryPhase,
+        1000
+    );
+
+}
+
+
+/* PHASE 3 */
+
+function memoryPhase(){
+
+    phase = 3;
+
+    round = 3;
+
+    updateStats();
+
+
+    card.innerHTML = `
+
+        <div class="phase">
+        ROUND 3 / 3
+        </div>
+
+        <div class="title">
+        🧩 MEMORY TEST
+        </div>
+
+        <div class="instructions">
+        Remember the sports icons.
+        <br>
+        Then tap them in the shown order.
+        </div>
+
+        <div
+        class="memory"
+        id="memoryBoard">
+        </div>
+
+    `;
+
+
+    const icons = [
+        "⚽",
+        "🏀",
+        "🎾",
+        "🏐"
+    ];
+
+
+    const board =
+    document.getElementById(
+        "memoryBoard"
+    );
+
+
+    icons.forEach(function(icon){
+
+        const box =
+        document.createElement("div");
+
+        box.className =
+        "memoryCard revealed";
+
+        box.textContent =
+        icon;
+
+        box.dataset.icon =
+        icon;
+
+        board.appendChild(box);
+
+    });
+
+
+    message.textContent =
+    "👀 MEMORIZE!";
+
+
+    setTimeout(function(){
+
+        startMemoryGame(
+            icons,
+            board
+        );
+
+    },1800);
+
+}
+
+
+/* MEMORY */
+
+function startMemoryGame(
+    icons,
+    board
+){
+
+    board.innerHTML =
+    "";
+
+
+    /*
+    SHUFFLE
+    */
+
+    const shuffled =
+    [...icons].sort(
+        () =>
+        Math.random()-.5
+    );
+
+
+    memoryFirst =
+    shuffled;
+
+
+    shuffled.forEach(function(icon){
+
+        const box =
+        document.createElement("div");
+
+        box.className =
+        "memoryCard";
+
+        box.dataset.icon =
+        icon;
+
+        box.textContent =
+        "?";
+
+
+        box.onclick =
+        function(){
+
+            memoryTap(box);
+
+        };
+
+
+        board.appendChild(box);
+
+    });
+
+
+    message.textContent =
+    "🧩 TAP THE ICONS IN ORDER!";
+
+}
+
+
+/* MEMORY TAP */
+
+function memoryTap(box){
+
+    if(memoryLocked) return;
+
+    const index =
+    document
+    .querySelectorAll(".memoryCard")
+    .length;
+
+
+    const clickedIcon =
+    box.dataset.icon;
+
+
+    /*
+    Find correct next icon
+    */
+
+    const revealed =
+    document.querySelectorAll(
+        ".memoryCard.revealed"
+    ).length;
+
+
+    if(
+        clickedIcon ===
+        memoryFirst[revealed]
+    ){
+
+        box.classList.add(
+            "revealed"
+        );
+
+        box.textContent =
+        clickedIcon;
+
+
+        score += 150;
+
+
+        updateStats();
+
+
+        if(
+            revealed + 1 ===
+            memoryFirst.length
+        ){
+
+            winChampionship();
+
+        }
+
+    }
+
+    else{
+
+        memoryLocked = true;
+
+        loseLife();
+
+
+        box.classList.add(
+            "revealed"
+        );
+
+        box.textContent =
+        clickedIcon;
+
+
+        setTimeout(function(){
+
+            memoryLocked = false;
+
+            document
+            .querySelectorAll(
+                ".memoryCard"
+            )
+            .forEach(function(c){
+
+                if(
+                    !c.classList.contains(
+                        "revealed"
+                    )
+                ){
+
+                    c.textContent =
+                    "?";
+
+                }
+
+            });
+
+        },700);
+
+    }
+
+}
+
+
+/* LIFE */
+
+function loseLife(){
+
+    lives--;
+
+    updateStats();
+
+
+    if(lives <= 0){
+
+        gameOver();
+
+    }
+
+}
+
+
+/* GAME OVER */
+
+function gameOver(){
+
+    card.innerHTML = `
+
+        <div class="phase">
+        CHAMPIONSHIP OVER
+        </div>
+
+        <div class="title">
+        💥 GAME OVER
+        </div>
+
+        <div class="instructions">
+
+        Final Score
+
+        <br><br>
+
+        <strong style="font-size:40px">
+        ${score}
+        </strong>
+
+        </div>
+
+        <button onclick="startGame()">
+        TRY AGAIN
+        </button>
+
+    `;
+
+
+    message.textContent =
+    "Keep training, champion!";
+
+}
+
+
+/* WIN */
+
+function winChampionship(){
+
+    card.innerHTML = `
+
+        <div class="phase">
+        🏆 CHAMPION
+        </div>
+
+        <div class="title">
+        ARCADE 10 CHAMPION!
+        </div>
+
+        <div class="instructions">
+
+        You completed all
+        three challenges!
+
+        <br><br>
+
+        FINAL SCORE
+
+        <br>
+
+        <strong style="font-size:50px">
+        ${score}
+        </strong>
+
+        <br><br>
+
+        🏆 YOU ARE THE CHAMPION! 🏆
+
+        </div>
+
+        <button onclick="startGame()">
+        PLAY AGAIN
+        </button>
+
+    `;
+
+
+    message.textContent =
+    "🔥 INCREDIBLE!";
+
+
+    saveScore();
+
+}
+
+
+/* SAVE */
+
+function saveScore(){
+
+    const oldScore =
+    Number(
+        localStorage.getItem(
+            "arcade10Score"
+        )
+    ) || 0;
+
+
+    if(score > oldScore){
+
+        localStorage.setItem(
+            "arcade10Score",
+            score
+        );
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>
