@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>Sprint Dash | ARCADE 10</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#07111f;
+    color:white;
+    text-align:center;
+    touch-action:manipulation;
+}
+
+header{
+    padding:18px;
+    background:#0b1d30;
+    border-bottom:1px solid #294963;
+}
+
+header h1{
+    margin:0;
+    font-size:34px;
+}
+
+.subtitle{
+    color:#9db5c8;
+    margin-top:5px;
+}
+
+.game{
+    max-width:800px;
+    margin:auto;
+    padding:15px;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.stat{
+    background:#10283e;
+    padding:10px 22px;
+    border-radius:15px;
+    min-width:95px;
+}
+
+.stat strong{
+    display:block;
+    color:#ffd43b;
+    font-size:24px;
+}
+
+.stat span{
+    font-size:11px;
+    color:#9db5c8;
+}
+
+
+/* TRACK */
+
+.track{
+    position:relative;
+    width:min(94vw,700px);
+    height:400px;
+    margin:auto;
+    overflow:hidden;
+
+    background:
+    repeating-linear-gradient(
+        0deg,
+        #24733a 0,
+        #24733a 48px,
+        #2c8142 49px,
+        #2c8142 96px
+    );
+
+    border:4px solid white;
+    border-radius:22px;
+}
+
+
+/* TRACK LINES */
+
+.trackLine{
+    position:absolute;
+    left:0;
+    width:100%;
+    height:5px;
+    background:white;
+    opacity:.8;
+}
+
+.line1{
+    top:25%;
+}
+
+.line2{
+    top:50%;
+}
+
+.line3{
+    top:75%;
+}
+
+
+/* FINISH */
+
+.finish{
+    position:absolute;
+    right:35px;
+    top:0;
+    width:15px;
+    height:100%;
+    background:white;
+
+    background-image:
+    linear-gradient(
+        45deg,
+        #111 25%,
+        transparent 25%,
+        transparent 75%,
+        #111 75%
+    ),
+    linear-gradient(
+        45deg,
+        #111 25%,
+        transparent 25%,
+        transparent 75%,
+        #111 75%
+    );
+
+    background-size:30px 30px;
+    background-position:0 0,15px 15px;
+}
+
+
+/* RUNNER */
+
+.runner{
+    position:absolute;
+
+    left:30px;
+    top:calc(50% - 35px);
+
+    width:65px;
+    height:65px;
+
+    font-size:50px;
+
+    transition:left .08s linear;
+}
+
+
+/* BUTTON */
+
+.tap{
+    width:min(90vw,500px);
+
+    margin-top:18px;
+
+    border:none;
+
+    padding:20px;
+
+    border-radius:25px;
+
+    background:#ffd43b;
+
+    color:#111;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    user-select:none;
+}
+
+.tap:active{
+    transform:scale(.96);
+}
+
+
+/* MESSAGE */
+
+.message{
+    min-height:32px;
+    margin:15px;
+    font-size:21px;
+    font-weight:bold;
+}
+
+
+.start{
+    border:none;
+    padding:13px 27px;
+    border-radius:25px;
+    background:#17344c;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+
+.back{
+    display:block;
+    margin:18px;
+    color:#ffd43b;
+    text-decoration:none;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .track{
+        height:360px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>🏃 SPRINT DASH</h1>
+
+<div class="subtitle">
+ARCADE 10 • GAME 08
+</div>
+
+</header>
+
+
+<main class="game">
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+
+<strong id="distance">
+0
+</strong>
+
+<span>DISTANCE</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="time">
+10.0
+</strong>
+
+<span>TIME</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="speed">
+0
+</strong>
+
+<span>SPEED</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="level">
+1
+</strong>
+
+<span>LEVEL</span>
+
+</div>
+
+</div>
+
+
+
+<!-- TRACK -->
+
+<div
+class="track"
+id="track">
+
+
+<div class="trackLine line1"></div>
+
+<div class="trackLine line2"></div>
+
+<div class="trackLine line3"></div>
+
+
+<div class="finish"></div>
+
+
+<div
+class="runner"
+id="runner">
+
+🏃
+
+</div>
+
+
+</div>
+
+
+
+<div
+class="message"
+id="message">
+
+Tap START, then TAP FAST!
+
+</div>
+
+
+<button
+class="start"
+id="startButton"
+onclick="startGame()">
+
+START RACE
+
+</button>
+
+
+<br>
+
+
+<button
+class="tap"
+id="tapButton"
+onclick="run()"
+disabled>
+
+👟 TAP TO RUN!
+
+</button>
+
+
+<a
+class="back"
+href="index.html">
+
+← Back to ARCADE 10
+
+</a>
+
+
+</main>
+
+
+
+<script>
+
+
+const track =
+document.getElementById("track");
+
+const runner =
+document.getElementById("runner");
+
+const distanceText =
+document.getElementById("distance");
+
+const timeText =
+document.getElementById("time");
+
+const speedText =
+document.getElementById("speed");
+
+const levelText =
+document.getElementById("level");
+
+const message =
+document.getElementById("message");
+
+const startButton =
+document.getElementById("startButton");
+
+const tapButton =
+document.getElementById("tapButton");
+
+
+let distance = 0;
+
+let time = 10;
+
+let speed = 0;
+
+let level = 1;
+
+let playing = false;
+
+let timer;
+
+let lastTap = 0;
+
+
+/* START */
+
+function startGame(){
+
+    if(playing) return;
+
+
+    distance = 0;
+
+    time = 10;
+
+    speed = 0;
+
+    level = 1;
+
+
+    playing = true;
+
+
+    distanceText.textContent =
+    distance;
+
+    timeText.textContent =
+    time.toFixed(1);
+
+    speedText.textContent =
+    speed;
+
+    levelText.textContent =
+    level;
+
+
+    runner.style.left =
+    "30px";
+
+
+    message.textContent =
+    "🔥 GO! GO! GO!";
+
+
+    startButton.style.display =
+    "none";
+
+
+    tapButton.disabled =
+    false;
+
+
+    lastTap =
+    performance.now();
+
+
+    timer =
+    setInterval(updateTimer,100);
+
+}
+
+
+/* TAP */
+
+function run(){
+
+    if(!playing) return;
+
+
+    const now =
+    performance.now();
+
+
+    const gap =
+    now - lastTap;
+
+
+    lastTap = now;
+
+
+    /*
+    EVERY TAP MOVES RUNNER
+    */
+
+    const boost =
+    Math.max(
+        2,
+        Math.min(12,1000 / gap)
+    );
+
+
+    distance +=
+    boost;
+
+
+    speed =
+    Math.round(boost * 10);
+
+
+    /*
+    LEVEL UP
+    */
+
+    if(distance >= 250){
+
+        level = 3;
+
+    }
+
+    else if(distance >= 120){
+
+        level = 2;
+
+    }
+
+    else{
+
+        level = 1;
+
+    }
+
+
+    distanceText.textContent =
+    Math.floor(distance);
+
+
+    speedText.textContent =
+    speed;
+
+    levelText.textContent =
+    level;
+
+
+    /*
+    MOVE RUNNER
+    */
+
+    const maxX =
+    track.clientWidth - 110;
+
+
+    const progress =
+    Math.min(
+        1,
+        distance / 300
+    );
+
+
+    const x =
+    30 +
+    progress * maxX;
+
+
+    runner.style.left =
+    x + "px";
+
+
+    /*
+    WIN
+    */
+
+    if(distance >= 300){
+
+        finishRace();
+
+    }
+
+}
+
+
+/* TIMER */
+
+function updateTimer(){
+
+    time -= .1;
+
+
+    if(time < 0){
+
+        time = 0;
+
+    }
+
+
+    timeText.textContent =
+    time.toFixed(1);
+
+
+    if(time <= 0){
+
+        if(distance < 300){
+
+            loseRace();
+
+        }
+
+    }
+
+}
+
+
+/* WIN */
+
+function finishRace(){
+
+    playing = false;
+
+    clearInterval(timer);
+
+
+    tapButton.disabled =
+    true;
+
+
+    message.textContent =
+    "🏆 FINISH! YOU WON!";
+
+
+    startButton.style.display =
+    "inline-block";
+
+
+    startButton.textContent =
+    "RACE AGAIN";
+
+
+    saveScore();
+
+}
+
+
+/* LOSE */
+
+function loseRace(){
+
+    playing = false;
+
+    clearInterval(timer);
+
+
+    tapButton.disabled =
+    true;
+
+
+    message.textContent =
+    "⏰ TIME! Distance: " +
+    Math.floor(distance);
+
+
+    startButton.style.display =
+    "inline-block";
+
+
+    startButton.textContent =
+    "TRY AGAIN";
+
+
+    saveScore();
+
+}
+
+
+/* SAVE */
+
+function saveScore(){
+
+    const oldScore =
+    Number(
+        localStorage.getItem("arcade10Score")
+    ) || 0;
+
+
+    const raceScore =
+    Math.floor(distance * level);
+
+
+    if(raceScore > oldScore){
+
+        localStorage.setItem(
+            "arcade10Score",
+            raceScore
+        );
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>
